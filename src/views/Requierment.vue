@@ -1,4 +1,3 @@
-<!-- Nav Bar que funcione con el router -->
 <template>
     <Header></Header>
     <router-view></router-view>
