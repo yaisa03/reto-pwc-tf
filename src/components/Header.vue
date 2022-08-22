@@ -8,4 +8,5 @@
     <router-link to="/pmo/manageUsers">Gestionador de Usuarios</router-link>
     <router-link to="/pmo/proyectsStatus">Estado de Gestion</router-link>
 </div>
+
 </template>
