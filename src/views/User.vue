@@ -1,10 +1,10 @@
 <template>
-    <Header></Header>
+    <HeaderUser></HeaderUser>
     <router-view></router-view>
 </template>
 
 <script setup>
-    import Header from '../components/Header.vue'
+    import HeaderUser from '../components/HeaderUser.vue'
 </script>
 
 <style>
