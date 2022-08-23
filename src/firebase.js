@@ -18,11 +18,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-const sendThis = (projectData) => {
+const addProject = (projectData) => {
 	try {
 		return addDoc(collection(db, "projects"), projectData);
 	} catch (error) {
 		console.log(error);
 	}
 };
+
 export { addProject };

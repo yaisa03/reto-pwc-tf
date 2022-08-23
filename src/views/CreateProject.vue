@@ -134,7 +134,7 @@ const handleSubmit = (e) => {
       </div>
     </div>
     <div class="d-flex justify-content-center">
-      <button type="submit" class="btn">Crear Proyecto</button>
+      <button type="submit" class="btn btn-outline-dark">Crear Proyecto</button>
     </div>
   </form>
 </template>
@@ -146,8 +146,9 @@ const handleSubmit = (e) => {
 }
 
 .btn {
-  background-color: #d63384;
+  background-color: rgb(219, 83, 106);
   color: white;
+  border: none;
 }
 
 .topics {
