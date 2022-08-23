@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { addProject } from '../firebase.js'
 let pName = ref('')
 let pStart = ref('')
@@ -17,6 +18,8 @@ let social = ref([
   { name: 'Trabajo', bool: false }
 ])
 let gobierno = ref([])
+const router = useRouter()
+const route = useRoute()
 const handleSubmit = (e) => {
   const dataObj = {
     name: pName.value,
@@ -31,6 +34,8 @@ const handleSubmit = (e) => {
   addProject(dataObj)
     .then(() => {
       e.target.reset()
+      // this.$router.push('/requirementList')
+      router.push('/pmo/requirementList')
     })
 }
 </script>
