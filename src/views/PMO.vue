@@ -9,3 +9,10 @@
 import Header from '../components/Header.vue'
 </script>
 
+<style>
+html,
+body {
+    height: 100vh;
+    padding: 10px;
+}
+</style>
