@@ -37,7 +37,7 @@ const router = createRouter({
 			path: '/user',
 			component: () => import('../views/User.vue'),
 			children: [
-				{ path: '', component: () => import('../views/Dashboard.vue') },
+				{ path: '', component: () => import('../views/DashboardUser.vue') },
 				{
 					path: 'compleateRequirement',
 					component: () => import('../views/CompleateRequirement.vue'),
