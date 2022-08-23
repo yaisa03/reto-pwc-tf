@@ -1,24 +1,24 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap-icons/font/bootstrap-icons.css'
-import firebase from './firebase'
+import "bootstrap-icons/font/bootstrap-icons.css";
+import firebase from "./firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDhlu8odxhqjNGCeVDIU2fa_ZNzLpeJp3g",
-    authDomain: "reto-pwc-tf.firebaseapp.com",
-    projectId: "reto-pwc-tf",
-    storageBucket: "reto-pwc-tf.appspot.com",
-    messagingSenderId: "918460267131",
-    appId: "1:918460267131:web:595b2f0e044f52a22f80de",
-    measurementId: "G-QH5W36YBX8"
-  };
-  firebase.initializeApp(firebaseConfig);
+	apiKey: "AIzaSyDhlu8odxhqjNGCeVDIU2fa_ZNzLpeJp3g",
+	authDomain: "reto-pwc-tf.firebaseapp.com",
+	projectId: "reto-pwc-tf",
+	storageBucket: "reto-pwc-tf.appspot.com",
+	messagingSenderId: "918460267131",
+	appId: "1:918460267131:web:595b2f0e044f52a22f80de",
+	measurementId: "G-QH5W36YBX8",
+};
+firebase.initializeApp(firebaseConfig);
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(router)
+app.use(router);
 
-app.mount('#app')
+app.mount("#app");

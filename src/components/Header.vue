@@ -9,9 +9,9 @@
     <nav class="navbar bg-dark">
         <div class="container-fluid">
             <router-link class="navbar-brand text-light" to="/pmo">Dashboard de Control</router-link>
-            <router-link class="navbar-brand text-light" to="/pmo/createProyect">Creacion de Proyecto</router-link>
+            <router-link class="navbar-brand text-light" to="/pmo/createProject">Creación de Proyecto</router-link>
             <router-link class="navbar-brand text-light" to="/pmo/manageUsers">Gestionador de Usuarios</router-link>
-            <router-link class="navbar-brand text-light" to="/pmo/proyectsStatus">Estado de Gestion</router-link>
+            <router-link class="navbar-brand text-light" to="/pmo/status">Estado de Gestión</router-link>
         </div>
     </nav>
 </template>
