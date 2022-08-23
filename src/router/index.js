@@ -9,7 +9,7 @@ const router = createRouter({
     { path: '/loginUser', component: LoginView },
     /* { path: '/createProyect', component: import('../views/CreateProyect.vue') }, */
     {
-      path: '/createRequierements',
+      path: '/createRequirements',
       component: import('../views/CreateRequirement.vue'),
     /* children:[
     {path :':chatId',component:import('../views/DashcontrolView.vue') }
@@ -18,7 +18,7 @@ const router = createRouter({
       path: '/pmo', component: () => import('../views/PMO.vue'),
       children: [
         { path: '', component:() =>import('../views/Dashboard.vue')},
-        { path: 'createProyect', component:() =>import('../views/CreateProyect.vue'), 
+        { path: 'createProject', component:() =>import('../views/CreateProject.vue'), 
         children: [
           { path: 'createRequirement', component:() =>import('../views/CreateRequirement.vue')}]},
         { path: 'manageUsers', component:() =>import('../views/ManageUsers.vue')},
@@ -29,7 +29,7 @@ const router = createRouter({
       path: '/user', component: () => import('../views/PMO.vue'),
       children: [
         { path: '', component:() =>import('../views/Dashboard.vue')},
-        { path: 'createProyect', component:() =>import('../views/CreateProyect.vue')}
+        { path: 'createProject', component:() =>import('../views/CreateProject.vue')}
       ]
     }
   ]
