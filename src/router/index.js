@@ -20,7 +20,7 @@ const router = createRouter({
         { path: '', component:() =>import('../views/Dashboard.vue')},
         { path: 'createProject', component:() =>import('../views/CreateProject.vue'), 
         children: [
-          { path: 'createRequirement', component:() =>import('../views/CreateRequirement.vue')}]},
+        { path: 'createRequirement', component:() =>import('../views/CreateRequirement.vue')}]},
         { path: 'manageUsers', component:() =>import('../views/ManageUsers.vue')},
         { path: 'status', component:() =>import('../views/Status.vue')}
       ]
@@ -29,7 +29,7 @@ const router = createRouter({
       path: '/user', component: () => import('../views/User.vue'),
       children: [
         { path: '', component:() =>import('../views/Dashboard.vue')},
-        { path: 'createProject', component:() =>import('../views/CreateProject.vue')}
+        { path: 'compleateRequirement', component:() =>import('../views/CompleateRequirement.vue')}
       ]
     }
   ]
