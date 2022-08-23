@@ -7,7 +7,6 @@ const log = () => console.log('ambiental', ambiental.value)
 </script>
 
 <template>
-  <p>Crear proyecto</p>
   <form>
     <label for="pName">Nombre del proyecto</label>
     <input type="text" id="pName" placeholder="Ejemplo: Reporte 23">

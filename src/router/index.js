@@ -22,11 +22,11 @@ const router = createRouter({
         children: [
           { path: 'createRequirement', component:() =>import('../views/CreateRequirement.vue')}]},
         { path: 'manageUsers', component:() =>import('../views/ManageUsers.vue')},
-        { path: 'proyectsStatus', component:() =>import('../views/ProyectsStatus.vue')}
+        { path: 'status', component:() =>import('../views/Status.vue')}
       ]
     },
     {
-      path: '/user', component: () => import('../views/PMO.vue'),
+      path: '/user', component: () => import('../views/User.vue'),
       children: [
         { path: '', component:() =>import('../views/Dashboard.vue')},
         { path: 'createProject', component:() =>import('../views/CreateProject.vue')}
