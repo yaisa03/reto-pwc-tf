@@ -3,7 +3,8 @@
     <form class='row g-30 '>
       <div class='Back'>
         <p>
-          <button class='arrow' @click="projectRequirements"><img class="rounded-circle" src='../assets/FlechaIzq.png' alt='Logo' /></button>
+          <button class='arrow' @click="projectRequirements"><img class="rounded-circle" src='../assets/FlechaIzq.png'
+              alt='Logo' /></button>
           Lista de Requerimientos
         </p>
       </div>
@@ -74,6 +75,7 @@
     </form>
   </div>
 </template>
+
 <style>
 .Btn {
   height: 45px;
@@ -125,9 +127,24 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+/* /* import { getItemsById } from '../firebase.js' */
+
+const docId = window.localStorage.getItem('ID');
+
+/* const themes = async () => {
+  return await getItemsById(docId)
+    .then((res) => {
+      return console.log(res);
+    }).catch((err) => err);
+}
+
+const bababa = getItemsById(docId)
 const router = useRouter()
 const projectRequirements = () => {
   router.push('/pmo/projectRequirements')
 }
+ */
+onMounted(console.log(bababa));
 </script>
 

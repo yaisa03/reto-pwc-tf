@@ -21,6 +21,13 @@ const createReq = () => {
 const allProjects = () => {
   router.push('/pmo/allProjects')
 }
+// antes del onMounted()
+let currentProject = ref('')
+
+const selectId = () => {
+  window.localStorage.setItem('ID', JSON.stringify(currentProject.value))
+  console.log(window.localStorage.getItem('ID'))
+}
 onMounted(getProjects);
 </script>
 
@@ -30,11 +37,10 @@ onMounted(getProjects);
       Ir a todos los proyectos </p>
   </div>
   <div class="d-flex flex-row justify-content-between">
-    <div class="w-25 p-1">
-      <p>Proyecto:</p>
-      <select class="form-select" aria-label="Default select example">
-        <option selected>Seleccionar</option>
-        <option v-for="p in projects" value="p.id">{{ p.data.name }}</option>
+    <div class="w-25 p-3">
+      <p>Proyecto: {{ currentProject }}</p>
+      <select v-model="currentProject" @change="selectId" class="form-select" aria-label="Default select example">
+        <option v-for="p in projects" :value="p.id">{{ p.data.name }}</option>
       </select>
     </div>
     <div class="w-90 d-flex justify-content-end p-1">
