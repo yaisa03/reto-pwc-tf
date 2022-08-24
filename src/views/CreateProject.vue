@@ -34,4 +34,5 @@ const log = () => console.log('ambiental', ambiental.value)
     <button @click="gobierno = !gobierno">Gobierno</button>
   </div>
   <button @click="log">click me</button>
-</template>
+</template>  
+
