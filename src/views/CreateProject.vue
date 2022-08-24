@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { addProject } from '../firebase.js'
+import { addProject, addReq, updateProject } from '../firebase.js'
 let pName = ref('')
 let pStart = ref('')
 let pEnd = ref(null)
 let leader = ref(null)
 let standard = ref(null)
-let ambiental = ref([
-  { name: 'Materiales', bool: false },
-  { name: 'Energía', bool: false },
-  { name: 'Agua', bool: false }
-])
+let ambiental = ref({
+  'Materiales': false,
+  'Energía': false,
+  'Agua': false
+})
 let social = ref([
   { name: 'Empleo', bool: false },
   { name: 'Salud', bool: false },
@@ -19,7 +19,7 @@ let social = ref([
 ])
 let gobierno = ref([])
 const router = useRouter()
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   const dataObj = {
     name: pName.value,
     start: pStart.value,
@@ -30,11 +30,21 @@ const handleSubmit = (e) => {
     social: social.value,
     gobierno: gobierno.value
   }
-  addProject(dataObj)
-    .then(() => {
-      e.target.reset()
-      router.push('/pmo/projectRequirements')
-    })
+  const project = await addProject(dataObj)
+  console.log(project)
+  const id = project.id;
+  const requirement = await addReq({
+    ambiental: ambiental.value,
+    social: social.value,
+    gobierno: gobierno.value,
+    projectId: id
+  })
+  const reqId = requirement.id;
+  await updateProject({
+    requirementId: reqId
+  }, id)
+  e.target.reset()
+  router.push('/pmo/projectRequirements')
 }
 
 let customAmbiental = ref('')
@@ -115,9 +125,9 @@ const addCustomTopic = (topic, pillar) => {
       </div>
       <div class="col-auto d-flex justify-content-between" style="width: 30%;">
         <div class="t-check">
-          <div v-for="(el, index) in ambiental" :key="index">
-            <input type="checkbox" :name="el" @click="el.bool = !el.bool">
-            <label for="el">{{ el.name }}</label>
+          <div v-for="(value, el) in ambiental" :key="el">
+            <input type="checkbox" :name="el" @click="ambiental[el] = !value">
+            <label for="el">{{ el }}</label>
           </div>
           <div>
             <input v-model="customAmbiental" type="text" class="form-control">

@@ -9,6 +9,7 @@ import {
 	deleteDoc,
 	where,
 	query,
+	setDoc
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -54,4 +55,20 @@ const deleteProject = (id) => {
 	deleteDoc(doc(projectColRef, id));
 };
 
-export { addProject, getProjects, projectColRef, deleteProject };
+const addReq = (reqData) => {
+	try {
+		return addDoc(collection(db, "requirements"), reqData);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const updateProject = (reqData, docId) => {
+	try {
+		return setDoc(doc(db, "projects", docId), reqData);
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export { addProject, getProjects, projectColRef, deleteProject, addReq, updateProject };
