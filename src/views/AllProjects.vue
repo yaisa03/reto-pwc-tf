@@ -18,8 +18,8 @@ onMounted(getProjects);
 </script>
 
 <template>
-    <div>
-        <img width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
+    <div class="back">
+        <img class="arrow" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
         <p>Dashboard de control</p>
     </div>
     <div class="container mt-3">
@@ -56,3 +56,13 @@ onMounted(getProjects);
         </div>
     </div>
 </template>
+
+<style>
+.back {
+    display: flex;
+    align-items: end;
+}
+.arrow {
+    margin-right: 10px;
+}
+</style>
