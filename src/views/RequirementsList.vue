@@ -1,15 +1,14 @@
-<script>
-export default {
-  methods: {
-    create(){
-      this.$router.push('/pmo/createRequirement')
-    }
-  }
+<script setup>
+// import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const createReq = () => {
+  router.push('/pmo/createRequirement')
 }
 </script>
 <template>
   <div>
-    <img @click="create" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
+    <img @click="createReq" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
     <p>Creacion de Proyecto Reporte 22 </p>
   </div>
   <div class="w-90 d-flex justify-content-end ">

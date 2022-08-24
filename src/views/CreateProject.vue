@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { addProject } from '../firebase.js'
 let pName = ref('')
 let pStart = ref('')
@@ -19,7 +19,6 @@ let social = ref([
 ])
 let gobierno = ref([])
 const router = useRouter()
-const route = useRoute()
 const handleSubmit = (e) => {
   const dataObj = {
     name: pName.value,

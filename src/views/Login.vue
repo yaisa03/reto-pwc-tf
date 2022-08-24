@@ -15,8 +15,8 @@ const user = () => {
 <template>
   <div class="d-flex justify-centerd-flex flex-column justify-content-center">
     <div class="row">
-    <img class="col-1" width="70" src="../assets/Logo-pwc.png" alt="Logo" />
-    <img  class="col-3 offset-3" height="70" src="../assets/ESG-1.jpg" alt="Logo" />
+      <img class="col-1" width="70" src="../assets/Logo-pwc.png" alt="Logo" />
+      <img class="col-3 offset-3" height="70" src="../assets/ESG-1.jpg" alt="Logo" />
     </div>
     <h4 class="text-center">Iniciar Sesion</h4>
   </div>
@@ -28,7 +28,7 @@ const user = () => {
       <router-link class="nav-link active text-dark" to="/loginUser">Usuario de negocio</router-link>
     </li>
   </ul>
-  <form >
+  <form>
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Correo</label>
       <input placeholder="usuario" v-model="email" type="email" class="form-control" id="exampleInputEmail1"
