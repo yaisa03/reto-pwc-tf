@@ -18,6 +18,13 @@ let social = ref([
   { name: 'Trabajo', bool: false }
 ])
 let gobierno = ref([])
+let customGobierno = ref('')
+const addCustomTopic = (topic, pillar) => {
+  topics.value.push({
+    name: topic,
+    bool: true,
+    pillar: pillar
+  })}
 const router = useRouter()
 const handleSubmit = (e) => {
   const dataObj = {
@@ -42,7 +49,7 @@ const handleSubmit = (e) => {
       })
       e.target.reset()
       router.push('/pmo/projectRequirements')
-    })
+    }) 
 }
 </script>
 <!-- <script setup>

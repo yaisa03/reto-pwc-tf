@@ -140,11 +140,12 @@ const docId = window.localStorage.getItem('ID');
 }
 
 const bababa = getItemsById(docId)
-const router = useRouter()
+const router = useRouter()*/
+
 const projectRequirements = () => {
   router.push('/pmo/projectRequirements')
 }
- */
-onMounted(console.log(bababa));
+/*
+onMounted(console.log(bababa)); */
 </script>
 
