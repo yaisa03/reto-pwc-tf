@@ -3,17 +3,17 @@
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const createReq = () => {
-  router.push('/pmo/createRequirement')
+  router.push('/pmo/createRequirements')
 }
 </script>
 <template>
   <div>
-    <img @click="createReq" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
+    <img width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
     <p>Creacion de Proyecto Reporte 22 </p>
   </div>
   <div class="w-90 d-flex justify-content-end ">
     <img width="50" src="../assets/Edit.png" alt="Edit" />
-    <img width="50" src="../assets/Crear.png" alt="Crear" />
+    <img @click="createReq" width="50" src="../assets/Crear.png" alt="Crear" />
     <img width="47" src="../assets/Borrar.png" alt="Borrar" />
   </div>
   <div class="w-25 p-3">
