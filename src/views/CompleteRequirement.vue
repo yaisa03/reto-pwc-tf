@@ -15,11 +15,11 @@ const state = computed(() => {
             <p></p>
         </li>
         <li class="list-group-item  flex-fill">
-            <p class="fw-bold">Descripcion del Requerimiento</p>
+            <p class="fw-bold">Descripción del Requerimiento</p>
             <p></p>
         </li>
         <li class="list-group-item  flex-fill">
-            <p class="fw-bold">Fecha de creacion</p>
+            <p class="fw-bold">Fecha de creación</p>
             <p></p>
         </li>
         <li class="list-group-item  flex-fill">
