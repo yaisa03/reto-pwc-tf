@@ -91,7 +91,7 @@ onMounted(getProjects);
 
     <div class="row mt-5">
         <div class="d-flex justify-content-center">
-            <button type="submit" @click="" class="btn btn-danger">Ver todos los proyectos</button>
+            <button type="submit" @click="seeAllProjects" class="btn btn-danger">Ver todos los proyectos</button>
         </div>
     </div>
 </div>
