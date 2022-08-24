@@ -6,7 +6,6 @@ let social = ref(false)
 let gobierno = ref(false)
 const log = () => console.log('ambiental', ambiental.value)
 </script>
-
 <template>
   <form>
     <label for="pName">Nombre del proyecto</label>
@@ -35,7 +34,6 @@ const log = () => console.log('ambiental', ambiental.value)
     <button @click="gobierno = !gobierno">Gobierno</button>
   </div>
   <button @click="log">click me</button>
-
 </template>-->
 <template>
   <div class='container align-items-center  row g-0'>
@@ -119,14 +117,11 @@ const log = () => console.log('ambiental', ambiental.value)
   margin-left: 40%;
   background-color: rgb(219, 83, 106);
   color: white;
-
 }
-
 .Referencer {
   margin-top: -3%;
   margin-left: 60%;
 }
-
 .Back {
   color: rgb(219, 83, 106);
   font-size: 15px;
