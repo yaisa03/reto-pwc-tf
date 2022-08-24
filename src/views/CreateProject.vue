@@ -1,9 +1,43 @@
 <script setup>
 import { ref } from 'vue'
-let ambiental = ref(false)
-let social = ref(false)
-let gobierno = ref(false)
-const log = () => console.log('ambiental', ambiental.value)
+import { useRouter, useRoute } from 'vue-router'
+import { addProject } from '../firebase.js'
+let pName = ref('')
+let pStart = ref('')
+let pEnd = ref(null)
+let leader = ref(null)
+let standard = ref(null)
+let ambiental = ref([
+  { name: 'Materiales', bool: false },
+  { name: 'Energía', bool: false },
+  { name: 'Agua', bool: false }
+])
+let social = ref([
+  { name: 'Empleo', bool: false },
+  { name: 'Salud', bool: false },
+  { name: 'Trabajo', bool: false }
+])
+let gobierno = ref([])
+const router = useRouter()
+const route = useRoute()
+const handleSubmit = (e) => {
+  const dataObj = {
+    name: pName.value,
+    start: pStart.value,
+    end: pEnd.value,
+    leader: leader.value,
+    standard: standard.value,
+    ambiental: ambiental.value,
+    social: social.value,
+    gobierno: gobierno.value
+  }
+  addProject(dataObj)
+    .then(() => {
+      e.target.reset()
+      // this.$router.push('/requirementList')
+      router.push('/pmo/requirementList')
+    })
+}
 </script>
 
 <template>
@@ -34,5 +68,4 @@ const log = () => console.log('ambiental', ambiental.value)
     <button @click="gobierno = !gobierno">Gobierno</button>
   </div>
   <button @click="log">click me</button>
-</template>  
-
+</template>
