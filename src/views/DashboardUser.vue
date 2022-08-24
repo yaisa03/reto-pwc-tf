@@ -1,3 +1,21 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { projectColRef } from '../firebase'
+import { onSnapshot } from '@firebase/firestore'
+const projects = ref([])
+const loading = ref(true)
+function getProjects() {
+    onSnapshot(projectColRef, (snapshot) => {
+        const allProjects = snapshot.docs.map(doc => ({
+            data: doc.data(),
+            id: doc.id
+        }))
+        projects.value = allProjects
+        loading.value = false
+    })
+}
+onMounted(getProjects);
+</script>
 <template>
     <div class="row g-3 align-items-center mt-1 w-50 p-3">
         <div class="col-auto">
@@ -28,36 +46,15 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox"> Reporte 20</td>
+                    <tr v-for="p in projects">
+                        <td>
+                            <input class="form-check-input" type="checkbox">{{ p.data.name }}
+                        </td>
                         <td>Agua</td>
                         <td>Consumo de agua</td>
                         <td>1 Oct, 21</td>
                         <td>12 Oct, 21</td>
                         <td>12 Oct, 21</td>
-                        <td>Alvaro Olea</td>
-                        <td><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: #519;"></i><span class="ms-1">
-                                En proceso</span></td>
-                    </tr>
-
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox"> Reporte 20</td>
-                        <td>Agua</td>
-                        <td>Consumo de agua</td>
-                        <td>12 Oct, 21</td>
-                        <td>12 Oct, 21</td>
-                        <td>12 Oct, 21</td>
-                        <td>Alvaro Olea</td>
-                        <td><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: #519;"></i><span class="ms-1">
-                                En proceso</span></td>
-                    </tr>
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox"> Reporte 20</td>
-                        <td>Agua</td>
-                        <td>Consumo de agua</td>
-                        <td>1 Nov, 21</td>
-                        <td>1 Nov, 21</td>
-                        <td>1 Nov, 21</td>
                         <td>Alvaro Olea</td>
                         <td><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: #519;"></i><span class="ms-1">
                                 En proceso</span></td>

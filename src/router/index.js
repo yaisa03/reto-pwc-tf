@@ -12,6 +12,7 @@ const router = createRouter({
 			component: () => import('../views/PMO.vue'),
 			children: [
 				{ path: '', component: () => import('../views/Dashboard.vue') },
+        { path: 'allProjects', component: () => import('../views/AllProjects.vue') },
 				{
 					path: 'createProject',
 					component: () => import('../views/CreateProject.vue')},
@@ -20,8 +21,8 @@ const router = createRouter({
 					component: import('../views/CreateRequirement.vue')
 				},
 				{
-					path: 'requirementList',
-					component: () => import('../views/RequirementsList.vue'),
+					path: 'projectRequirements',
+					component: () => import('../views/ProjectRequirements.vue'),
 				},
 				{
 					path: 'manageUsers',
@@ -36,8 +37,8 @@ const router = createRouter({
 			children: [
 				{ path: '', component: () => import('../views/DashboardUser.vue') },
 				{
-					path: 'compleateRequirement',
-					component: () => import('../views/CompleateRequirement.vue'),
+					path: 'completeRequirement',
+					component: () => import('../views/CompleteRequirement.vue'),
 				},
 			],
 		},
