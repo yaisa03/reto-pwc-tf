@@ -8,23 +8,20 @@ const router = createRouter({
 		{ path: '/loginPMO', component: LoginView },
 		{ path: '/loginUser', component: LoginView },
 		{
-			path: '/createRequirements',
-			component: import('../views/CreateRequirement.vue')
-		},
-		{
 			path: '/pmo',
 			component: () => import('../views/PMO.vue'),
 			children: [
 				{ path: '', component: () => import('../views/Dashboard.vue') },
 				{
 					path: 'createProject',
-					component: () => import('../views/CreateProject.vue'),
-					children: [
-						{
-							path: 'createRequirement',
-							component: () => import('../views/CreateRequirement.vue'),
-						},
-					],
+					component: () => import('../views/CreateProject.vue')},
+				{
+					path: '/createRequirements',
+					component: import('../views/CreateRequirement.vue')
+				},
+				{
+					path: 'requirementList',
+					component: () => import('../views/RequirementsList.vue'),
 				},
 				{
 					path: 'manageUsers',
