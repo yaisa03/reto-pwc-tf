@@ -1,21 +1,68 @@
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
-  },
-  methods: {
-    iniciar() {
-      this.$router.push('/pmo');
-      console.log(this.email, this.password);
-      console.log(window.location.pathname + window.location.search)
-    },
-    user() {
-      this.$router.push('/user')
-    }
-  }
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+let email = ref('')
+let password = ref('')
+const pmo = () => {
+  router.push('/pmo')
+}
+const user = () => {
+  router.push('/user')
+}
+</script>
+
+<template>
+  <div class="d-flex justify-centerd-flex flex-column justify-content-center">
+    <div class="row">
+      <img class="col-1" width="70" src="../assets/Logo-pwc.png" alt="Logo" />
+      <img class="col-3 offset-3" height="70" src="../assets/ESG-1.jpg" alt="Logo" />
+    </div>
+    <h4 class="text-center">Iniciar Sesion</h4>
+  </div>
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <router-link class="nav-link active text-dark" to="/loginPMO">PMO</router-link>
+    </li>
+    <li class="nav-item">
+      <router-link class="nav-link active text-dark" to="/loginUser">Usuario de negocio</router-link>
+    </li>
+  </ul>
+  <form>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Correo</label>
+      <input placeholder="usuario" v-model="email" type="email" class="form-control" id="exampleInputEmail1"
+        aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+      <input placeholder="contraseña" v-model="password" type="password" class="form-control"
+        id="exampleInputPassword1">
+    </div>
+    <div class="d-flex justify-centerd-flex flex-column justify-content-center">
+      <button @click="pmo">Ingresar a PMO</button>
+      <button @click="user">Ingresar a usuario</button>
+      <p>Olvide mi contraseña</p>
+    </div>
+  </form>
+</template>
+
+<style>
+p {
+  text-align: center;
+}
+</style>
+
+<!-- <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+let email = ref('')
+let password = ref('')
+const pmo = () => {
+  router.push('/pmo')
+}
+const user = () => {
+  router.push('/user')
 }
 </script>
 
@@ -47,7 +94,7 @@ export default {
         id="exampleInputPassword1">
     </div>
     <div class="d-flex justify-centerd-flex flex-column justify-content-center">
-      <button @click="iniciar">Ingresar a PMO</button>
+      <button @click="pmo">Ingresar a PMO</button>
       <button @click="user">Ingresar a usuario</button>
       <p>Olvide mi contraseña</p>
     </div>
@@ -58,4 +105,4 @@ export default {
 p {
   text-align: center;
 }
-</style>
+</style> -->

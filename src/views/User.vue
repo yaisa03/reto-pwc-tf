@@ -4,12 +4,13 @@
 </template>
 
 <script setup>
-    import HeaderUser from '../components/HeaderUser.vue'
+import HeaderUser from '../components/HeaderUser.vue'
 </script>
 
 <style>
-        html, body {
-            height: 100vh;
-            padding: 10px;
-        }
+html,
+body {
+    height: 100vh;
+    padding: 10px;
+}
 </style>
