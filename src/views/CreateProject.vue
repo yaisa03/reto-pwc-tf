@@ -93,7 +93,7 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label class="col-form-label fw-bold">Pilares</label>
       </div>
-      <div class="col-auto w-25 flex">
+      <div class="col-auto w-25 d-flex">
         <div class="border border-dark rounded outline">Ambiental</div>
         <div class="border border-dark rounded outline">Social</div>
         <div class="border border-dark rounded outline">Gobierno</div>
@@ -104,9 +104,9 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label class="col-form-label fw-bold">Temas</label>
       </div>
-      <div class="col-auto w-25 flex">
+      <div class="col-auto w-25 d-flex">
         <div>
-          <div v-for="el in ambiental">
+          <div v-for="(el, index) in ambiental" :key="index">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
@@ -153,14 +153,5 @@ const handleSubmit = (e) => {
   background-color: rgb(219, 83, 106);
   color: white;
   border: none;
-}
-
-.topics {
-  display: grid;
-  grid-template-columns: 20vw 20vw 20vw;
-}
-
-.flex {
-  display: flex;
 }
 </style>
