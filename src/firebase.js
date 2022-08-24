@@ -4,7 +4,7 @@ import {
     getFirestore,
     collection,
     addDoc,
-    getDocs,
+    getDoc,
     doc,
     deleteDoc,
     updateDoc,
@@ -27,6 +27,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const projectColRef = collection(db, "projects");
+const referencia = (id) => doc(db, "projects", id)
 const addProject = (projectData) => {
     try {
         return addDoc(collection(db, "projects"), projectData);
@@ -49,9 +50,10 @@ const addReq = (reqData) => {
 	}
 };
 
-const getItemsById = (id) => {
-	getDoc(doc(db, 'menu-items', id))
+const getProjectById = (id) => {
+	getDoc(doc(db, 'project', id))
 		.then((item) => {
+            console.log
 			return {
 				id: item.id,
 				data: item.data()
@@ -80,4 +82,4 @@ const getProjects = () => {
 const deleteProject = (id) => {
     deleteDoc(doc(projectColRef, id));
 };
-export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getItemsById };
+export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getProjectById, referencia };

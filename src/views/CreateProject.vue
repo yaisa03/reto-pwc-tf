@@ -24,7 +24,8 @@ const addCustomTopic = (topic, pillar) => {
     name: topic,
     bool: true,
     pillar: pillar
-  })}
+  })
+}
 const router = useRouter()
 const handleSubmit = (e) => {
   const dataObj = {
@@ -41,127 +42,17 @@ const handleSubmit = (e) => {
         ambiental: ambiental.value,
         social: social.value,
         gobierno: gobierno.value,
-        })
-    .then((res) => {
-      console.log(res)
-      console.log(res.id)
-      return readReq(res.id)
       })
-      e.target.reset()
-      router.push('/pmo/projectRequirements')
-    }) 
-}
-</script>
-<!-- <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { addProject } from '../firebase.js'
-let pName = ref('')
-let pStart = ref('')
-let pEnd = ref(null)
-let leader = ref(null)
-let standard = ref(null)
-let ambiental = ref([
-  { name: 'Materiales', bool: false },
-  { name: 'Energía', bool: false },
-  { name: 'Agua', bool: false }
-])
-let social = ref([
-  { name: 'Empleo', bool: false },
-  { name: 'Salud', bool: false },
-  { name: 'Trabajo', bool: false }
-])
-let gobierno = ref([])
-const router = useRouter()
-const handleSubmit = (e) => {
-  const dataObj = {
-    name: pName.value,
-    start: pStart.value,
-    end: pEnd.value,
-    leader: leader.value,
-    standard: standard.value,
-    ambiental: ambiental.value,
-    social: social.value,
-    gobierno: gobierno.value
-  }
-  addProject(dataObj)
-    .then(() => {
+        .then((res) => {
+          console.log(res)
+          console.log(res.id)
+          return readReq(res.id)
+        })
       e.target.reset()
       router.push('/pmo/projectRequirements')
     })
 }
-
-let customAmbiental = ref('')
-let customSocial = ref('')
-let customGobierno = ref('')
-const addCustomTopic = (topic, pillar) => {
-  pillar.push({
-    name: topic,
-    bool: true
-  })
-}
-</script> -->
-
-<!-- <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { addProject, addReq, updateProject } from '../firebase.js'
-let pName = ref('')
-let pStart = ref('')
-let pEnd = ref(null)
-let leader = ref(null)
-let standard = ref(null)
-let topics = ref([
-  { name: 'Materiales', bool: false, pillar: 'Ambiental' },
-  { name: 'Energía', bool: false, pillar: 'Ambiental' },
-  { name: 'Agua', bool: false, pillar: 'Ambiental' },
-  { name: 'Empleo', bool: false, pillar: 'Social' },
-  { name: 'Salud', bool: false, pillar: 'Social' },
-  { name: 'Trabajo', bool: false, pillar: 'Social' }
-])
-const filterTopics = (topics, pillar) => {
-  return topics.filter(topic => topic.pillar === pillar)
-}
-
-const router = useRouter()
-const handleSubmit = async (e) => {
-  const dataObj = {
-    name: pName.value,
-    start: pStart.value,
-    end: pEnd.value,
-    leader: leader.value,
-    standard: standard.value,
-    topics: topics.value
-  }
-  const project = await addProject(dataObj)
-  console.log(project)
-  const id = project.id;
-  const requirement = await addReq({
-    ambiental: ambiental.value,
-    social: social.value,
-    gobierno: gobierno.value,
-    projectId: id
-  })
-  const reqId = requirement.id;
-  await updateProject({
-    requirementId: reqId
-  }, id)
-  e.target.reset()
-  router.push('/pmo/projectRequirements')
-}
-
-let customAmbiental = ref('')
-let customSocial = ref('')
-let customGobierno = ref('')
-const addCustomTopic = (topic, pillar) => {
-  topics.value.push({
-    name: topic,
-    bool: true,
-    pillar: pillar
-  })
-  // limpiar custom field
-}
-</script> -->
+</script>
 
 <template>
   <form class="p-4 mt-2 d-flex flex-column gap-2" @submit.prevent="handleSubmit" style="">
@@ -224,7 +115,7 @@ const addCustomTopic = (topic, pillar) => {
       </div>
     </div>
 
-<div class="row">
+    <div class="row">
       <div class="col-auto w-25">
         <label class="col-form-label fw-bold">Temas</label>
       </div>
@@ -263,46 +154,6 @@ const addCustomTopic = (topic, pillar) => {
         </div>
       </div>
     </div>
-
-<!-- <div class="row">
-      <div class="col-auto w-25">
-        <label class="col-form-label fw-bold">Temas</label>
-      </div>
-      <div class="col-auto d-flex justify-content-between" style="width: 30%;">
-        <div class="t-check">
-          <div v-for="topic in filterTopics(topics, 'Ambiental')" :key="topic.name">
-            <input type="checkbox" :name="topic.name" @click="topic.bool = !topic.bool">
-            <label for="topic.name">{{ topic.name }}</label>
-          </div>
-          <div>
-            <input v-model="customAmbiental" type="text" class="form-control">
-            <button @click="addCustomTopic(customAmbiental, 'Ambiental')" type="button"
-              class="btn btn-light">Agregar</button>
-          </div>
-        </div>
-        <div class="t-check">
-          <div v-for="topic in filterTopics(topics, 'Social')">
-            <input type="checkbox" :name="topic.name" @click="topic.bool = !topic.bool">
-            <label for="topic.name">{{ topic.name }}</label>
-          </div>
-          <div>
-            <input v-model="customSocial" type="text" class="form-control">
-            <button @click="addCustomTopic(customSocial, 'Social')" type="button" class="btn btn-light">Agregar</button>
-          </div>
-        </div>
-        <div class="t-check">
-          <div v-for="topic in filterTopics(topics, 'Gobierno')">
-            <input type="checkbox" :name="topic.name" @click="topic.bool = !topic.bool">
-            <label for="topic.name">{{ topic.name }}</label>
-          </div>
-          <div class="d-flex gap-1 flex-column">
-            <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
-            <button @click="addCustomTopic(customGobierno, 'Gobierno')" type="button"
-              class="btn btn-light">Agregar</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="d-flex justify-content-center">
       <button type="submit" class="submit btn btn-outline-dark">Crear Proyecto</button>
     </div>
@@ -329,6 +180,7 @@ const addCustomTopic = (topic, pillar) => {
   color: white;
   border: none;
 }
+
 .submit {
   background-color: rgb(219, 83, 106);
   color: white;

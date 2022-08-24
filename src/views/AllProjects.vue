@@ -1,7 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { projectColRef, deleteProject } from '../firebase'
 import { onSnapshot } from '@firebase/firestore'
+const router = useRouter()
 const projects = ref([])
 const loading = ref(true)
 function getProjects() {
@@ -14,6 +16,12 @@ function getProjects() {
         loading.value = false
     })
 }
+
+function edit(id) {
+    window.localStorage.setItem('EDITID', id)
+    router.push('/pmo/editProject')
+}
+
 onMounted(getProjects);
 </script>
 
@@ -45,7 +53,7 @@ onMounted(getProjects);
                         <td>{{ p.data.end }}</td>
                         <td>{{ p.data.leader }}</td>
                         <td>
-                            <button style="border: none;"><img width="50" src="../assets/Edit.png" alt="Edit" /></button>
+                            <button style="border: none;" @click="edit(p.id)"><img width="50" src="../assets/Edit.png" alt="Edit" /></button>
                         </td>
                         <td>
                             <button style="border: none;" @click="deleteProject(p.id)"><img width="47" src="../assets/Borrar.png" alt="Edit" /></button>
