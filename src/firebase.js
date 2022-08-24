@@ -1,6 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, setDoc } from "firebase/firestore";
+import {
+	getFirestore,
+	collection,
+	addDoc,
+	getDocs,
+    doc,
+	deleteDoc,
+	where,
+	query,
+} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,6 +26,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
+const projectColRef = collection(db, "projects");
 
 const addProject = (projectData) => {
 	try {
@@ -26,4 +36,22 @@ const addProject = (projectData) => {
 	}
 };
 
-export { addProject };
+const getProjects = () => {
+	getDocs(collection(db, "projects"))
+		.then((Response) => {
+			console.log(Response.docs.data());
+			return Response.docs.map((project) => ({
+				data: project.data(),
+				id: project.id,
+			}));
+		})
+		.catch((error) => console.log(error));
+};
+
+// update
+
+const deleteProject = (id) => {
+	deleteDoc(doc(projectColRef, id));
+};
+
+export { addProject, getProjects, projectColRef, deleteProject };

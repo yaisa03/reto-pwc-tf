@@ -9,7 +9,7 @@
     <nav class="navbar bg-dark">
         <div class="container-fluid">
             <router-link class="navbar-brand text-light" to="/user">Dashboard de Control</router-link>
-            <router-link class="navbar-brand text-light" to="/user/compleateRequirement">Completar Requerimiento
+            <router-link class="navbar-brand text-light" to="/user/completeRequirement">Completar Requerimiento
             </router-link>
         </div>
     </nav>

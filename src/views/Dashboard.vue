@@ -1,3 +1,25 @@
+<script setup>
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { projectColRef } from '../firebase'
+import { onSnapshot } from '@firebase/firestore'
+const projects = ref([])
+const router = useRouter()
+function getProjects() {
+    onSnapshot(projectColRef, (snapshot) => {
+        const allProjects = snapshot.docs.map(doc => ({
+            data: doc.data(),
+            id: doc.id
+        }))
+        projects.value = allProjects
+    })
+}
+const seeAllProjects = () => {
+    router.push('/pmo/allProjects')
+}
+onMounted(getProjects);
+</script>
+
 <template>
     <div class="container">
         <div class="row">
@@ -27,9 +49,7 @@
                     <div class="col-auto w-50">
                         <select class="form-select" aria-label=".form-select-sm example">
                             <option selected>Seleccionar</option>
-                            <option value="1">Reporte 22</option>
-                            <option value="2">Reporte 21</option>
-                            <option value="3">Reporte 20</option>
+                            <option v-for="p in projects" value="p.id">{{ p.data.name }}</option>
                         </select>
                     </div>
                 </div>
@@ -63,7 +83,7 @@
         </div>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <button type="submit" @click="" class="btn btn-danger">Ver todos los proyectos</button>
+                <button type="submit" @click="seeAllProjects" class="btn btn-danger">Ver todos los proyectos</button>
             </div>
         </div>
     </div>
