@@ -1,3 +1,25 @@
+<script setup>
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { projectColRef } from '../firebase'
+import { onSnapshot } from '@firebase/firestore'
+const projects = ref([])
+const router = useRouter()
+function getProjects() {
+    onSnapshot(projectColRef, (snapshot) => {
+        const allProjects = snapshot.docs.map(doc => ({
+            data: doc.data(),
+            id: doc.id
+        }))
+        projects.value = allProjects
+    })
+}
+const seeAllProjects = () => {
+    router.push('/pmo/allProjects')
+}
+onMounted(getProjects);
+</script>
+
 <template>
 <div class="container">
     <div class="row mt-5">

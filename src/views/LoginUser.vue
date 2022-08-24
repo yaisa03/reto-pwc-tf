@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 let email = ref('')
 let password = ref('')
-const pmo = () => {
-  router.push('/pmo')
+const user = () => {
+  router.push('/user')
   console.log(password.value, email.value)
 }
 </script>
@@ -39,7 +39,7 @@ const pmo = () => {
           id="exampleInputPassword1">
       </div>
       <div class="d-flex justify-centerd-flex flex-column justify-content-center">
-        <button class="bttn" @click="pmo">Ingresar a PMO</button>
+        <button class="bttn" @click="user">Ingresar a usuario</button>
         <p>Olvide mi contraseña</p>
       </div>
     </form>
