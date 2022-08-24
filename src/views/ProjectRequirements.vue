@@ -9,7 +9,7 @@ const createReq = () => {
 <template>
   <div>
     <img width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
-    <p>Creacion de Proyecto Reporte 22 </p>
+    <p>Creación de Proyecto Reporte 22 </p>
   </div>
   <div class="w-90 d-flex justify-content-end ">
     <img width="50" src="../assets/Edit.png" alt="Edit" />

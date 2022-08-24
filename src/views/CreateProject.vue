@@ -33,8 +33,7 @@ const handleSubmit = (e) => {
   addProject(dataObj)
     .then(() => {
       e.target.reset()
-      // this.$router.push('/requirementList')
-      router.push('/pmo/requirementList')
+      router.push('/pmo/projectRequirements')
     })
 }
 </script>

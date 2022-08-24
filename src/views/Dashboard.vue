@@ -1,3 +1,11 @@
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const seeAllProjects = () => {
+    router.push('/pmo/allProjects')
+}
+</script>
+
 <template>
     <div class="container">
         <div class="row">
@@ -63,7 +71,7 @@
         </div>
         <div class="row">
             <div class="d-flex justify-content-center">
-                <button type="submit" @click="" class="btn btn-danger">Ver todos los proyectos</button>
+                <button type="submit" @click="seeAllProjects" class="btn btn-danger">Ver todos los proyectos</button>
             </div>
         </div>
     </div>

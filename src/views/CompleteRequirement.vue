@@ -1,3 +1,9 @@
+<script setup>
+import { ref, computed } from 'vue'
+const state = computed(() => {
+  // create a computed property here
+})
+</script>
 <template>
     <ul class="list-group list-group-horizontal">
         <li class="list-group-item  flex-fill">
