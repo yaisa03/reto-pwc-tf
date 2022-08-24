@@ -161,9 +161,7 @@ const createReq = (e) => {
     proyectID: docId
   }
   console.log(newReq);
-  console.log(docId)
- getItemsById(docId).then((res)=>{console.log(res)});
- addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
+ addReq(newReq).then(res=>{console.log(res.data())}).catch(err=>{console.log(err)})
 }
 
 onMounted(getDocId);
