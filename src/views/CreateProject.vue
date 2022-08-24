@@ -150,3 +150,16 @@ const handleSubmit = (e) => {
   <button @click="log">click me</button>
 
 </template>
+<style>
+.outline {
+  width: fit-content;
+  padding: 5px 13px;
+}
+
+.btn {
+  background-color: rgb(219, 83, 106);
+  color: white;
+  border: none;
+}
+</style>
+
