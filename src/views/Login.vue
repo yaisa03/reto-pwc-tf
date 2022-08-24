@@ -1,21 +1,13 @@
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: ''
-    }
-  },
-  methods: {
-    iniciar() {
-      this.$router.push('/pmo');
-      console.log(this.email, this.password);
-      console.log(window.location.pathname + window.location.search)
-    },
-    user() {
-      this.$router.push('/user')
-    }
-  }
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+let email = ref('')
+let password = ref('')
+const pmo = () => {
+  router.push('/pmo')
+}
+const user = () => {
+  router.push('/user')
 }
 </script>
 
@@ -47,7 +39,7 @@ export default {
         id="exampleInputPassword1">
     </div>
     <div class="d-flex justify-centerd-flex flex-column justify-content-center">
-      <button @click="iniciar">Ingresar a PMO</button>
+      <button @click="pmo">Ingresar a PMO</button>
       <button @click="user">Ingresar a usuario</button>
       <p>Olvide mi contraseña</p>
     </div>
