@@ -33,9 +33,18 @@ const handleSubmit = (e) => {
   addProject(dataObj)
     .then(() => {
       e.target.reset()
-      // this.$router.push('/requirementList')
-      router.push('/pmo/requirementList')
+      router.push('/pmo/projectRequirements')
     })
+}
+
+let customAmbiental = ref('')
+let customSocial = ref('')
+let customGobierno = ref('')
+const addCustomTopic = (topic, pillar) => {
+  pillar.push({
+    name: topic,
+    bool: true
+  })
 }
 </script>
 
@@ -111,8 +120,8 @@ const handleSubmit = (e) => {
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
-            <input type="text" class="form-control">
-            <button>Agregar</button>
+            <input v-model="customAmbiental" type="text" class="form-control">
+            <button @click="addCustomTopic(customAmbiental, ambiental)" type="button" class="btn btn-light">Agregar</button>
           </div>
         </div>
         <div>
@@ -121,8 +130,8 @@ const handleSubmit = (e) => {
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
-            <input type="text" class="form-control">
-            <button>Agregar</button>
+            <input v-model="customSocial" type="text" class="form-control">
+            <button @click="addCustomTopic(customSocial, social)" type="button" class="btn btn-light">Agregar</button>
           </div>
         </div>
         <div>
@@ -131,14 +140,14 @@ const handleSubmit = (e) => {
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
-            <input type="text" class="form-control">
-            <button>Agregar</button>
+            <input v-model="customGobierno" type="text" class="form-control">
+            <button @click="addCustomTopic(customGobierno, gobierno)" type="button" class="btn btn-light">Agregar</button>
           </div>
         </div>
       </div>
     </div>
     <div class="d-flex justify-content-center">
-      <button type="submit" class="btn btn-outline-dark">Crear Proyecto</button>
+      <button type="submit" class="submit btn btn-outline-dark">Crear Proyecto</button>
     </div>
   </form>
 </template>
@@ -149,7 +158,7 @@ const handleSubmit = (e) => {
   padding: 5px 13px;
 }
 
-.btn {
+.submit {
   background-color: rgb(219, 83, 106);
   color: white;
   border: none;
