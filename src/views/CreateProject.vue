@@ -115,6 +115,7 @@ const addCustomTopic = (topic, pillar) => {
       </div>
       <div class="col-auto d-flex justify-content-between" style="width: 30%;">
         <div class="t-check">
+
           <div v-for="(el, index) in ambiental" :key="index">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
@@ -126,7 +127,7 @@ const addCustomTopic = (topic, pillar) => {
           </div>
         </div>
         <div class="t-check">
-          <div v-for="el in social">
+          <div v-for="(el, index) in social" :key="index">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
@@ -136,11 +137,11 @@ const addCustomTopic = (topic, pillar) => {
           </div>
         </div>
         <div class="t-check">
-          <div v-for="el in gobierno">
+          <div v-for="(e, index) in gobierno" :key="index">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
-          <div class="d-flex gap-1">
+          <div class="d-flex gap-1 flex-column">
             <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
             <button @click="addCustomTopic(customGobierno, gobierno)" type="button"
               class="btn btn-light">Agregar</button>
@@ -174,7 +175,6 @@ const addCustomTopic = (topic, pillar) => {
   color: white;
   border: none;
 }
-
 .submit {
   background-color: rgb(219, 83, 106);
   color: white;

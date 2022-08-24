@@ -18,28 +18,32 @@ function getProjects() {
 const createReq = () => {
   router.push('/pmo/createRequirements')
 }
+const allProjects = () => {
+  router.push('/pmo/allProjects')
+}
 onMounted(getProjects);
 </script>
 
 <template>
-  <div class="w-90 d-flex justify-content-first">
-    <p>
-    <img @click="create" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
-    Creacion de Proyecto Reporte 22 
-    </p>
+  <div class="d-flex flex-row">
+    <p><img @click="allProjects" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
+      Ir a todos los proyectos </p>
   </div>
-  <div class="w-90 d-flex justify-content-end ">
-    <img width="50" src="../assets/Edit.png" alt="Edit" />
-    <img @click="createReq" width="50" src="../assets/Crear.png" alt="Crear" />
-    <img width="47" src="../assets/Borrar.png" alt="Borrar" />
+  <div class="d-flex flex-row justify-content-between">
+    <div class="w-25 p-1">
+      <p>Proyecto:</p>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Seleccionar</option>
+        <option v-for="p in projects" value="p.id">{{ p.data.name }}</option>
+      </select>
+    </div>
+    <div class="w-90 d-flex justify-content-end p-1">
+      <img width="50" height="50" src="../assets/Edit.png" alt="Edit" />
+      <img @click="createReq" height="50" width="50" src="../assets/Crear.png" alt="Crear" />
+      <img width="50" height="50" src="../assets/Borrar.png" alt="Borrar" />
+    </div>
   </div>
-  <div class="w-25 p-3">
-    <p>Proyecto:</p>
-    <select class="form-select" aria-label="Default select example">
-      <option selected>Seleccionar</option>
-      <option v-for="p in projects" value="p.id">{{ p.data.name }}</option>
-    </select>
-  </div>
+
   <div class="d-flex flex-row">
     <table class="table caption-top">
       <thead>
@@ -76,7 +80,6 @@ onMounted(getProjects);
           <th>
             <select class="form-select" aria-label="Default select example">
               <option selected>Fecha de Vencimiento</option>
-              <input type="date" id="pStart" placeholder="Seleccionar" />
             </select>
           </th>
           <th>
@@ -99,7 +102,8 @@ onMounted(getProjects);
       </thead>
       <tbody>
         <tr>
-          <td><input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input"/>Ambiental</td>
+          <td><input class="form-check-input mt-0" type="checkbox" value=""
+              aria-label="Checkbox for following text input" />Ambiental</td>
           <td>Energia</td>
           <td></td>
           <td></td>
@@ -109,13 +113,15 @@ onMounted(getProjects);
         </tr>
 
         <td>
-          <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input"/> Social </td>
-          <td> Agua</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <input class="form-check-input mt-0" type="checkbox" value=""
+            aria-label="Checkbox for following text input" /> Social
+        </td>
+        <td> Agua</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
 
       </tbody>
     </table>

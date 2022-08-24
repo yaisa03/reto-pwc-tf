@@ -34,6 +34,10 @@ const router = createRouter({
 					path: 'status',
 					component: () => import('../views/Status.vue'),
 				},
+				{
+					path: 'createUser',
+					component: () => import('../views/CreateUsers.vue'),
+				},
 			],
 		},
 		{
