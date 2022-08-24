@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/Login.vue';
+import LoginUserView from '../views/LoginUser.vue';
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
 		{ path: '/', component: LoginView },
 		{ path: '/loginPMO', component: LoginView },
-		{ path: '/loginUser', component: LoginView },
+		{ path: '/loginUser', component: LoginUserView},
 		{
 			path: '/pmo',
 			component: () => import('../views/PMO.vue'),
