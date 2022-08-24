@@ -47,8 +47,8 @@ onMounted(getProjects);
                 </thead>
                 <tbody class="text-center">
                     <tr v-for="p in projects">
-                        <td>
-                            <input class="form-check-input" type="checkbox">{{ p.data.name }}
+                        <td class="text-start">
+                            <input class="form-check-input ms-4" type="checkbox"> {{ p.data.name }}
                         </td>
                         <td>Agua</td>
                         <td>Consumo de agua</td>

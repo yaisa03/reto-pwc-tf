@@ -18,9 +18,11 @@ onMounted(getProjects);
 </script>
 
 <template>
-    <div>
-        <img width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
-        <p>Dashboard de control</p>
+    <div class="d-flex align-items-center mt-2" style="gap: 5px;">
+        <router-link class="navbar-brand text-light" to="/pmo">
+            <i class="bi bi-arrow-left-circle" style="font-size: 1.8rem; color: rgb(219, 83, 106);"></i>
+        </router-link>
+        <span>Dashboard de control</span>
     </div>
     <div class="container mt-3">
         <div class="table-responsive table-bordered">
@@ -38,17 +40,15 @@ onMounted(getProjects);
                 <h4 v-if="loading" class="d-flex justify-content-center">Loading...</h4>
                 <tbody v-for="p in projects" class="text-center">
                     <tr>
-                        <td><input class="form-check-input" type="checkbox">{{ p.data.name }}</td>
+                        <td class="text-start" ><input class="form-check-input ms-5" type="checkbox"> {{ p.data.name }}</td>
                         <td>{{ p.data.start }}</td>
                         <td>{{ p.data.end }}</td>
                         <td>{{ p.data.leader }}</td>
                         <td>
-                            <button><img width="50" src="../assets/Edit.png" alt="Edit" /></button>
+                            <button style="border: none;"><img width="50" src="../assets/Edit.png" alt="Edit" /></button>
                         </td>
                         <td>
-                            <button @click="deleteProject(p.id)">
-                                <img width="47" src="../assets/Borrar.png" alt="Borrar" />
-                            </button>
+                            <button style="border: none;" @click="deleteProject(p.id)"><img width="47" src="../assets/Borrar.png" alt="Edit" /></button>
                         </td>
                     </tr>
                 </tbody>

@@ -39,12 +39,12 @@ const handleSubmit = (e) => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form class="p-4 mt-2 d-flex flex-column gap-2" @submit.prevent="handleSubmit" style="">
     <div class="row g-3 align-items-center">
       <div class="col-auto w-25">
         <label for="pName" class="col-form-label fw-bold">Nombre del proyecto</label>
       </div>
-      <div class="col-auto w-25">
+      <div class="col-auto" style="width: 30%;">
         <input v-model="pName" type="text" id="pName" placeholder="Ejemplo: Reporte 23" class="form-control" required>
       </div>
     </div>
@@ -52,7 +52,7 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label for="pStart" class="col-form-label fw-bold">Fecha de inicio</label>
       </div>
-      <div class="col-auto w-25">
+      <div class="col-auto" style="width: 30%;">
         <input v-model="pStart" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
       </div>
     </div>
@@ -60,7 +60,7 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label for="pEnd" class="col-form-label fw-bold">Fecha de fin</label>
       </div>
-      <div class="col-auto w-25">
+      <div class="col-auto" style="width: 30%;">
         <input v-model="pEnd" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
       </div>
     </div>
@@ -68,7 +68,7 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label for="leader" class="col-form-label fw-bold">Líder del proyecto</label>
       </div>
-      <div class="col-auto w-25">
+      <div class="col-auto" style="width: 30%;">
         <select v-model="leader" name="leader" class="form-select">
           <option value="Maria Caceres">Maria Caceres</option>
           <option value="Lorena Alva">Lorena Alva</option>
@@ -80,7 +80,7 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label for="standard" class="col-form-label fw-bold">Estándar del proyecto</label>
       </div>
-      <div class="col-auto w-25">
+      <div class="col-auto" style="width: 30%;">
         <select v-model="standard" name="leader" class="form-select" aria-label="Default select example">
           <option value="1">Estándar 1</option>
           <option value="2">Estándar 2</option>
@@ -92,7 +92,7 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label class="col-form-label fw-bold">Pilares</label>
       </div>
-      <div class="col-auto w-25 d-flex">
+      <div class="col-auto d-flex justify-content-between gap-1" style="width: 30%;">
         <div class="border border-dark rounded outline">Ambiental</div>
         <div class="border border-dark rounded outline">Social</div>
         <div class="border border-dark rounded outline">Gobierno</div>
@@ -103,35 +103,37 @@ const handleSubmit = (e) => {
       <div class="col-auto w-25">
         <label class="col-form-label fw-bold">Temas</label>
       </div>
-      <div class="col-auto w-25 d-flex">
-        <div>
-          <div v-for="(el, index) in ambiental" :key="index">
+      <div class="col-auto d-flex justify-content-between" style="width: 30%;">
+        <div class="t-check">
+          <div v-for="(el, index) in ambiental" :key="index" >
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
             <input type="text" class="form-control">
-            <button>Agregar</button>
+            <button class="btn btn-light">Agregar</button>
           </div>
         </div>
-        <div>
+        <div class="t-check">
           <div v-for="el in social">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
             <input type="text" class="form-control">
-            <button>Agregar</button>
+            <button class="btn btn-light">Agregar</button>
           </div>
         </div>
-        <div>
+        <div class="t-check">
           <div v-for="el in gobierno">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
-          <div>
-            <input type="text" class="form-control">
-            <button>Agregar</button>
+          <div class="d-flex gap-1">
+            <input type="checkbox"/>
+            <input type="text" placeholder="Añadir" class="form-control">
+            <!-- <button class="btn btn-light"> Agregar</button> -->
+            <!-- <i class="bi bi-plus-square-fill text-warning" style="font-size: 20px;"></i> -->
           </div>
         </div>
       </div>
@@ -144,11 +146,18 @@ const handleSubmit = (e) => {
 
 <style>
 .outline {
-  width: fit-content;
-  padding: 5px 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
 }
-
-.btn {
+.t-check{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30%;
+}
+.btn-outline-dark {
   background-color: rgb(219, 83, 106);
   color: white;
   border: none;
