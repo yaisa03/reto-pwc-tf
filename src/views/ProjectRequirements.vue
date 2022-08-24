@@ -22,9 +22,11 @@ onMounted(getProjects);
 </script>
 
 <template>
-  <div>
-    <img width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
-    <p>Creación de Proyecto Reporte 22 </p>
+  <div class="w-90 d-flex justify-content-first">
+    <p>
+    <img @click="create" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
+    Creacion de Proyecto Reporte 22 
+    </p>
   </div>
   <div class="w-90 d-flex justify-content-end ">
     <img width="50" src="../assets/Edit.png" alt="Edit" />
@@ -97,7 +99,7 @@ onMounted(getProjects);
       </thead>
       <tbody>
         <tr>
-          <td>Ambiental</td>
+          <td><input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input"/>Ambiental</td>
           <td>Energia</td>
           <td></td>
           <td></td>
@@ -105,6 +107,16 @@ onMounted(getProjects);
           <td></td>
           <td></td>
         </tr>
+
+        <td>
+          <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input"/> Social </td>
+          <td> Agua</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
       </tbody>
     </table>
   </div>
