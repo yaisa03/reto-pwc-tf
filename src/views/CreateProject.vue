@@ -115,13 +115,14 @@ const addCustomTopic = (topic, pillar) => {
       </div>
       <div class="col-auto d-flex justify-content-between" style="width: 30%;">
         <div class="t-check">
-          <div v-for="(el, index) in ambiental" :key="index" >
+          <div v-for="(el, index) in ambiental" :key="index">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
             <input v-model="customAmbiental" type="text" class="form-control">
-            <button @click="addCustomTopic(customAmbiental, ambiental)" type="button" class="btn btn-light">Agregar</button>
+            <button @click="addCustomTopic(customAmbiental, ambiental)" type="button"
+              class="btn btn-light">Agregar</button>
           </div>
         </div>
         <div class="t-check">
@@ -141,7 +142,8 @@ const addCustomTopic = (topic, pillar) => {
           </div>
           <div class="d-flex gap-1">
             <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
-            <button @click="addCustomTopic(customGobierno, gobierno)" type="button" class="btn btn-light">Agregar</button>
+            <button @click="addCustomTopic(customGobierno, gobierno)" type="button"
+              class="btn btn-light">Agregar</button>
           </div>
         </div>
       </div>
@@ -159,17 +161,19 @@ const addCustomTopic = (topic, pillar) => {
   align-items: center;
   width: 30%;
 }
-.t-check{
+
+.t-check {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 30%;
 }
+
 .btn-outline-dark {
   background-color: rgb(219, 83, 106);
   color: white;
   border: none;
-  }
+}
 
 .submit {
   background-color: rgb(219, 83, 106);

@@ -7,16 +7,17 @@ const router = createRouter({
 	routes: [
 		{ path: '/', component: LoginView },
 		{ path: '/loginPMO', component: LoginView },
-		{ path: '/loginUser', component: LoginUserView},
+		{ path: '/loginUser', component: LoginUserView },
 		{
 			path: '/pmo',
 			component: () => import('../views/PMO.vue'),
 			children: [
 				{ path: '', component: () => import('../views/Dashboard.vue') },
-        { path: 'allProjects', component: () => import('../views/AllProjects.vue') },
+				{ path: 'allProjects', component: () => import('../views/AllProjects.vue') },
 				{
 					path: 'createProject',
-					component: () => import('../views/CreateProject.vue')},
+					component: () => import('../views/CreateProject.vue')
+				},
 				{
 					path: 'createRequirements',
 					component: import('../views/CreateRequirement.vue')
@@ -29,7 +30,10 @@ const router = createRouter({
 					path: 'manageUsers',
 					component: () => import('../views/ManageUsers.vue'),
 				},
-				{ path: 'status', component: () => import('../views/Status.vue') },
+				{
+					path: 'status',
+					component: () => import('../views/Status.vue'),
+				},
 			],
 		},
 		{
