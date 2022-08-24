@@ -46,8 +46,9 @@ onMounted(getProjects);
                             <button><img width="50" src="../assets/Edit.png" alt="Edit" /></button>
                         </td>
                         <td>
-                            <button @click="deleteProject(p.id)"><img width="47" src="../assets/Borrar.png"
-                                    alt="Borrar" /></button>
+                            <button @click="deleteProject(p.id)">
+                                <img width="47" src="../assets/Borrar.png" alt="Borrar" />
+                            </button>
                         </td>
                     </tr>
                 </tbody>

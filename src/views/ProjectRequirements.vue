@@ -1,11 +1,26 @@
 <script setup>
 // import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { projectColRef } from '../firebase'
+import { onSnapshot } from '@firebase/firestore'
+const projects = ref([])
 const router = useRouter()
+function getProjects() {
+  onSnapshot(projectColRef, (snapshot) => {
+    const allProjects = snapshot.docs.map(doc => ({
+      data: doc.data(),
+      id: doc.id
+    }))
+    projects.value = allProjects
+  })
+}
 const createReq = () => {
   router.push('/pmo/createRequirements')
 }
+onMounted(getProjects);
 </script>
+
 <template>
   <div>
     <img width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
@@ -19,10 +34,8 @@ const createReq = () => {
   <div class="w-25 p-3">
     <p>Proyecto:</p>
     <select class="form-select" aria-label="Default select example">
-      <option selected>Reporte</option>
-      <option value="1">Reporte 22</option>
-      <option value="2">Reporte 23</option>
-      <option value="3">Reporte 24</option>
+      <option selected>Seleccionar</option>
+      <option v-for="p in projects" value="p.id">{{ p.data.name }}</option>
     </select>
   </div>
   <div class="d-flex flex-row">
