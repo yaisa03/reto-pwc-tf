@@ -22,6 +22,10 @@ function edit(id) {
     router.push('/pmo/editProject')
 }
 
+const allProjects = () => {
+    router.push('/pmo/projectRequirements')
+}
+
 onMounted(getProjects);
 </script>
 

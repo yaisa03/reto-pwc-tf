@@ -31,6 +31,9 @@ const db = getFirestore();
 const projectColRef = collection(db, "projects");
 const referencia = (id) => doc(db, "projects", id);
 const referenciaReq = (id) => doc(db, "requirements", id);
+const refCol = collection(db, "requirements");
+const refByProject = (id) => query(refCol, where('proyectID', '==', id))
+
 const addProject = (projectData) => {
 	try {
 		return addDoc(collection(db, "projects"), projectData);
