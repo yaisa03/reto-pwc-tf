@@ -28,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const projectColRef = collection(db, "projects");
+const referencia = (id) => doc(db, "projects", id)
 const addProject = (projectData) => {
     try {
         return addDoc(collection(db, "projects"), projectData);
@@ -81,4 +82,4 @@ const getProjects = () => {
 const deleteProject = (id) => {
     deleteDoc(doc(projectColRef, id));
 };
-export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getItemsById };
+export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getItemsById, referencia };

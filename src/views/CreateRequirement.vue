@@ -128,7 +128,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { getItemsById, addReq} from '../firebase.js'
+import { doc, getDoc } from 'firebase/firestore'
+import { getItemsById, addReq, referencia } from '../firebase.js'
 const router = useRouter()
 const projectRequirements = (e) => {
   e.preventDefault()
@@ -137,10 +138,6 @@ const projectRequirements = (e) => {
 
 const docId = window.localStorage.getItem('ID');
 
-const getDocId = () => {
-  console.log(docId);
-}
-
 let themes = ref('')
 let req = ref('')
 let reqDescription = ref('')
@@ -148,6 +145,31 @@ let content = ref('')
 let responsable = ref('')
 let eDate = ref('')
 let formFile = ref('')
+
+let project = ref([])
+let id = window.localStorage.getItem('ID')
+console.log(id)
+const docRef = referencia(id)
+let reqDoc = ref('')
+
+const getData = async () => {
+    console.log('holi')
+    console.log(docId)
+    // getDoc(docRef)
+    // .then((response) => console.log(response.data()))
+    try {
+        const myProject = await getDoc(docRef)
+        project.value = myProject.data()
+        reqDoc.value = project.value.requerimientos
+        console.log(reqDoc)
+        console.log(project.value)
+    } catch(err) {
+        console.log(err)
+        console.log(err.stack)
+        console.log(err.message)
+    }
+}
+
 const createReq = (e) => {
   e.preventDefault()
   const newReq = {
@@ -161,9 +183,11 @@ const createReq = (e) => {
     proyectID: docId
   }
   console.log(newReq);
- addReq(newReq).then(res=>{console.log(res.data())}).catch(err=>{console.log(err)})
+  console.log(reqDoc.value)
+  //agregar el requerimiento al archivo por su id
+ addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
 }
 
-onMounted(getDocId);
+onMounted(getData);
 </script>
 

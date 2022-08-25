@@ -25,7 +25,7 @@ const allProjects = () => {
 let currentProject = ref('')
 
 const selectId = () => {
-  window.localStorage.setItem('ID', JSON.stringify(currentProject.value))
+  window.localStorage.setItem('ID', currentProject.value)
   console.log(window.localStorage.getItem('ID'))
 }
 onMounted(getProjects);
