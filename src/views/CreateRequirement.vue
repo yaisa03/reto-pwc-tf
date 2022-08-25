@@ -12,7 +12,8 @@
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Tema </label>
         <div class="col-sm-5">
           <select v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
-            <option v-for="el in filterByPillar(topics)" :key="el.name" :value="el.pillar+'_'+el.name">{{ el.name }}</option>
+            <option v-for="el in filterByPillar(topics)" :key="el.name" :value="el.pillar + '_' + el.name">{{ el.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -127,13 +128,9 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { doc, getDoc } from 'firebase/firestore'
-import { referencia, referenciaReq, addReq } from '../firebase.js'
+import { referencia, addReq, addReqId } from '../firebase.js'
 
 const router = useRouter()
-const projectRequirements = (e) => {
-  e.preventDefault()
-  router.push('/pmo/projectRequirements')
-}
 
 const docId = window.localStorage.getItem('ID');
 
@@ -163,12 +160,7 @@ const getData = async () => {
     const myProject = await getDoc(docRef)
     project.value = myProject.data()
     topics.value = project.value.topics
-
-    console.log(topics.value)
-    console.log(project.value)
-
     // const filterByPillar=() => topics.value.filter(topic => topic.bool === true)
-
   } catch (err) {
     console.log(err)
     console.log(err.stack)
@@ -191,16 +183,19 @@ const createReq = async (e) => {
     status: "En Progreso",
     date: new Date().toLocaleString()
   }
-  console.log(newReq);
-  e.target.reset()
-try {
-    addReq(newReq)
-   
-  } catch (err) {
+  addReq(newReq)
+  .then((res) => {
+    const reqId = res.id
+    console.log('reqId', reqId)
+    addReqId(docId, reqId)
+    e.target.reset()
+    router.push('/pmo/projectRequirements')
+  })
+  .catch ((err) => {
     console.log(err)
     console.log(err.stack)
     console.log(err.message)
-  }
+  })
 }
 
 onMounted(getData);

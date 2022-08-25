@@ -109,13 +109,15 @@ const sortPendingOrders = (state, callback) => {
 const deleteProject = async (id) => {
     const docSnap = await getDoc(doc(db, 'projects', id));
     let array = docSnap.data().requirements;
-    if(array.length > 0) {
+    if(array && array.length > 0) {
+        console.log(0)
         array.forEach(reqId => {
             deleteDoc(doc(collection(db, "requirements"), reqId));
             console.log('deleting requirement', reqId)
         });
     }
     deleteDoc(doc(projectColRef, id));
+    console.log('deleting project', id)
 };
 
 const addReqId = async (projId, reqId) => {

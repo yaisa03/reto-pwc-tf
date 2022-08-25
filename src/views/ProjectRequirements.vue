@@ -1,5 +1,4 @@
 <script setup>
-// import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { projectColRef, refCol } from '../firebase'
@@ -22,7 +21,6 @@ function getProjects() {
       id: doc.id,
     }))
     projects.value = allProjects
-    console.log(projects.value)
   })
   onSnapshot(refCol, (snapshot) => {
     const allRequirements = snapshot.docs.map((doc) => ({
@@ -30,7 +28,6 @@ function getProjects() {
       id: doc.id,
     }))
     requirements.value = allRequirements
-    console.log(requirements.value)
   })
 }
 const createReq = () => {
