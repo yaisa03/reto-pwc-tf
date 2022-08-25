@@ -44,13 +44,14 @@ onMounted(getProjects)
 </script>
 
 <template>
-  <div class="w-90 d-flex justify-content-first">
+  <div class="w-90 d-flex justify-content-first mt-2">
     <p>
       <img @click="create" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
       Creacion de Proyecto Reporte 22
     </p>
   </div>
-  <div class="row g-3 align-items-center mt-1 w-50 p-3">
+  <div class="d-flex flex-row justify-content-between me-5 ms-5">
+    <div>
     <div class="col-auto">
       <label class="col-form-label fw-bold">Proyecto: {{ currentProject }}
       </label>
@@ -60,12 +61,16 @@ onMounted(getProjects)
         <option v-for="p in projects" :value="p.id">{{ p.data.name }}</option>
       </select>
     </div>
-    <div class="w-90 d-flex justify-content-end p-1">
-      <img width="50" height="50" src="../assets/Edit.png" alt="Edit" />
-      <img @click="createReq" height="50" width="50" src="../assets/Crear.png" alt="Crear" />
-      <img width="50" height="50" src="../assets/Borrar.png" alt="Borrar" />
+    </div>
+    <div class="row align-items-center">
+      <div class="w-90 d-flex justify-content-end">
+        <img width="55" height="55" src="../assets/Edit.png" alt="Edit" />
+        <img @click="createReq" height="50" width="50" src="../assets/Crear.png" alt="Crear" />
+        <img width="50" height="50" src="../assets/Borrar.png" alt="Borrar" />
+      </div>
     </div>
   </div>
+
   <div class="container mt-3">
     <div class="table-responsive table-bordered">
       <table class="table table-responsive align-middle">
@@ -80,7 +85,7 @@ onMounted(getProjects)
           </tr>
         </thead>
         <tbody class="text-center">
-          <tr v-for="r in requirements" >
+          <tr v-for="r in requirements">
             <td>{{ r.data.pillar }}</td>
             <td>{{ r.data.theme }}</td>
             <td>{{ r.data.requirement }}</td>

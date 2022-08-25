@@ -178,7 +178,6 @@ const getData = async () => {
 
 const createReq = async (e) => {
   const theme = themes.value.split('_')
-  console.log(theme)
   const newReq = {
     pillar: theme[1],
     theme: theme[0],
@@ -189,7 +188,8 @@ const createReq = async (e) => {
     expirationDate: eDate.value,
     formFile: formFile.value,
     proyectID: docId,
-    status: "En Progreso"
+    status: "En Progreso",
+    date: new Date().toLocaleString()
   }
   console.log(newReq);
   e.target.reset()

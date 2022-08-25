@@ -39,16 +39,19 @@ const handleSubmit = (e) => {
     standard: standard.value,
     topics: topics.value
   }
-  addProject(dataObj)
+    addProject(dataObj)
     .then((res) => {
+      const projId = res.id
+      console.log('projId', projId)
       addRequer({
         idProyecto: res.id,
         topics: topics.value
       })
         .then((res) => {
-          console.log(res)
-          console.log(res.id)
-          return readReq(res.id)
+          const reqId = res.id
+          console.log('reqId', reqId)
+          // return readReq(res.id)
+          return addReqId(projId, reqId)
         })
       e.target.reset()
       window.localStorage.setItem('ID', res.id)
