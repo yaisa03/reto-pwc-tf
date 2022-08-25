@@ -2,7 +2,9 @@
 import { addOneReq, referencia, referenciaReq, updateReq } from '../firebase'
 import { ref, onMounted } from 'vue';
 import { getDoc } from '@firebase/firestore'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 let detailReq = ref('')
 let dateReq = ref('')
 let evidenceofintegrity = ref('')
@@ -21,6 +23,7 @@ const handleSubmit = (e) =>{
         console.log(res)
         e.target.reset()
         updateReq(window.localStorage.getItem('reqID'), {status: "Completado", newDate: new Date().toLocaleString()})
+        router.push('/user')
     })
 }
 

@@ -87,11 +87,8 @@ onMounted(getProjects);
                 </thead>
                 <tbody class="text-center">
                     <tr v-for="r in selectReq">
-                        <td @click="compleateReq(r.id)">{{ r.data.theme }}</td>
-                        <td style="cursor: pointer;">
-                            <router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}
-                            </router-link>
-                        </td>
+                        <td style="cursor: pointer;" @click="compleateReq(r.id)">{{ r.data.theme }}</td>
+                        <td>{{ r.data.requirement }}</td>
                         <td>{{ r.data.date }}</td>
                         <td>{{ r.data.expirationDate }}</td>
                         <td>{{ r.data.newDate }}</td>

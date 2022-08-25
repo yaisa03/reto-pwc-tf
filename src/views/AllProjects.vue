@@ -15,6 +15,7 @@ function getProjects() {
         projects.value = allProjects
         loading.value = false
     })
+     window.localStorage.setItem('ID','')
 }
 
 function edit(id) {
