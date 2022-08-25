@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { referencia } from '../firebase.js'
 const router = useRouter()
 let project = ref([])
-let id = window.localStorage.getItem('EDITID')
+let id = window.localStorage.getItem('ID')
 console.log(id)
 const docRef = referencia(id)
 
