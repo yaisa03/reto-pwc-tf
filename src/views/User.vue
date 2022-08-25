@@ -10,7 +10,9 @@ import HeaderUser from '../components/HeaderUser.vue'
 <style>
 html,
 body {
+    margin: 0;
     height: 100vh;
     padding: 10px;
+    box-sizing: border-box;
 }
 </style>

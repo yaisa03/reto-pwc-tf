@@ -132,9 +132,19 @@ const addReqId = async (projId, reqId) => {
     }
 };
 
+const addOneReq = (onlyReqData) => {
+    try {
+        return addDoc(collection(db, "newcolleccion"), onlyReqData);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+
 export {
     addProject, addRequer, readReq, getProjects,
     projectColRef, deleteProject, addReq, getItemsById,
     referencia, referenciaReq, addRequirement, refByProject,
-    findReqByProj, refCol, addReqId
+    findReqByProj, refCol, addReqId, addOneReq,
 };

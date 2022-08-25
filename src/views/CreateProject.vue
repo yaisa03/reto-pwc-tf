@@ -45,16 +45,6 @@ const handleSubmit = (e) => {
     .then((res) => {
       const projId = res.id
       console.log('projId', projId)
-      addRequer({
-        idProyecto: res.id,
-        topics: topics.value
-      })
-        .then((res) => {
-          const reqId = res.id
-          console.log('reqId', reqId)
-          // return readReq(res.id)
-          return addReqId(projId, reqId)
-        })
       e.target.reset()
       window.localStorage.setItem('ID', res.id)
       console.log('hello', window.localStorage.getItem('ID'))

@@ -179,8 +179,8 @@ const getData = async () => {
 const createReq = async (e) => {
   const theme = themes.value.split('_')
   const newReq = {
-    pillar: theme[1],
-    theme: theme[0],
+    pillar: theme[0],
+    theme: theme[1],
     requirement: req.value,
     reqDescription: reqDescription.value,
     themeContent: content.value,

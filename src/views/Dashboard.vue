@@ -26,21 +26,21 @@ onMounted(getProjects);
         <section class="col-sm float-left mr-10">
         <span class="fw-bold float-left">Indicaciones clave</span>
         <div class="mt-4">
-            <label class="pr-5">Total de requerimientos:     </label>
-            <button class="btn btn-secondary btn-lg ml-5" disabled>3</button>
+            <label class="pr-5">Total de requerimientos:</label>
+            <button class="btn btn-secondary btn-lg ml-5 ms-4" disabled>3</button>
         </div>
         
         <table class="container mt-5">
-            <tr class="flex-fill">
-                <td class="bg-danger"><button class="btn btn-secondary btn-lg" disabled>1</button></td>
-                <td class="bg-warning"><button class="btn btn-secondary btn-lg" disabled>1</button></td>
-                <td class="bg-success"><button class="btn btn-secondary btn-lg" disabled>1</button></td>
+            <tr class="fill">
+                <td class=" p-1 text-center " style="background-color: rgb(224, 48, 30) ;"><button class="btn btn-secondary btn-lg" disabled>1</button></td>
+                <td class="p-1 text-center " style="background-color: rgb(255, 182, 0);"><button class="btn btn-secondary btn-lg" disabled>1</button></td>
+                <td class=" p-1 text-center " style="background-color: rgb(173, 255, 38);"><button class="btn btn-secondary btn-lg" disabled>1</button></td>
             </tr>
 
             <tr>
-                <td>Vencido</td>
-                <td>En proceso</td>
-                <td>Comprobado</td>
+                <td class="text-center">Vencido</td>
+                <td class="text-center">En proceso</td>
+                <td class="text-center">Comprobado</td>
             </tr>
         </table>
         </section>
