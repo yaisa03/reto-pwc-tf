@@ -9,8 +9,10 @@ import {
 	deleteDoc,
 	updateDoc,
 	onSnapshot,
+    setDoc,
 	where,
-	query
+	query,
+    arrayUnion,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,7 +30,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const projectColRef = collection(db, "projects");
 const referencia = (id) => doc(db, "projects", id);
-const referenciaReq = (id) => doc(db, "requirements", id)
+const referenciaReq = (id) => doc(db, "requirements", id);
 const addProject = (projectData) => {
 	try {
 		return addDoc(collection(db, "projects"), projectData);
@@ -37,8 +39,14 @@ const addProject = (projectData) => {
 	}
 };
 // update
-const deleteProject = (id) => {
-	deleteDoc(doc(projectColRef, id));
+const deleteProject = async (id) => {
+    const docSnap = await getDoc(doc(db, 'projects', id));
+    let array = docSnap.data().requirements;
+    array.forEach(reqId => {
+        deleteDoc(doc(collection(db, "requirements"), reqId));
+        console.log('deleting requirement', reqId)
+    });
+    deleteDoc(doc(projectColRef, id));
 };
 
 const addRequer = (reqData) => {
@@ -49,11 +57,11 @@ const addRequer = (reqData) => {
 	}
 };
 const addReq = (reqData) => {
-    try {
-        return addDoc(collection(db, "requirements"), reqData);
-    } catch (error) {
-        console.log(error);
-    }
+	try {
+		return addDoc(collection(db, "requirements"), reqData);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const getItemsById = (id) => {
@@ -77,6 +85,19 @@ const readReq = (id) =>
 		console.log("Current data: ", doc.data().idProyecto);
 		updateProject(doc.data().idProyecto, { requerimientos: id });
 	});
+
+const addReqId = async (projId, reqId) => {
+	try {
+		await updateDoc(doc(db, "projects", projId), {
+            requirements: arrayUnion(reqId)
+        });
+	} catch (err) {
+		console.log(err);
+		console.log(err.stack);
+		console.log(err.message);
+	}
+};
+
 const getProjects = () => {
 	getDocs(collection(db, "projects"))
 		.then((Response) => {
@@ -99,5 +120,6 @@ export {
 	addReq,
 	getItemsById,
 	referencia,
-    referenciaReq
+	referenciaReq,
+    addReqId
 };
