@@ -4,7 +4,7 @@
         <img width='70' src='../assets/Logo-pwc.png' alt='Logo'/>
         <img height='50' src='../assets/ESG-1.jpg' alt='Logo' />
         </div>
-        <i class='bi bi-box-arrow-in-right' style='font-size: 2.5rem'></i>
+        <router-link class="navbar-brand text-light" to="/"><i class="bi bi-box-arrow-in-right" style="font-size: 2.5rem; color: black;"></i></router-link>
     </div>
     <nav class="navbar bg-dark">
         <div class="container-fluid">
