@@ -41,7 +41,7 @@ const handleSubmit = (e) => {
     topics: topics.value,
     requirements: [],
   }
-  addProject(dataObj)
+    addProject(dataObj)
     .then((res) => {
       const projId = res.id
       console.log('projId', projId)

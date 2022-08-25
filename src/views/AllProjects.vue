@@ -48,7 +48,7 @@ onMounted(getProjects);
                 <h4 v-if="loading" class="d-flex justify-content-center">Loading...</h4>
                 <tbody v-for="p in projects" class="text-center">
                     <tr>
-                        <td class="text-start" ><input class="form-check-input ms-5" type="checkbox"> {{ p.data.name }}</td>
+                        <td @click="allProjects" class="text-start">{{ p.data.name }}</td>
                         <td>{{ p.data.start }}</td>
                         <td>{{ p.data.end }}</td>
                         <td>{{ p.data.leader }}</td>

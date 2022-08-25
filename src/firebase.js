@@ -38,17 +38,6 @@ const addProject = (projectData) => {
 		console.log(error);
 	}
 };
-// update
-const deleteProject = async (id) => {
-    const docSnap = await getDoc(doc(db, 'projects', id));
-    let array = docSnap.data().requirements;
-    array.forEach(reqId => {
-        deleteDoc(doc(collection(db, "requirements"), reqId));
-        console.log('deleting requirement', reqId)
-    });
-    deleteDoc(doc(projectColRef, id));
-};
-
 const addRequer = (reqData) => {
 	try {
 		return addDoc(collection(db, "requirements"), reqData);
@@ -78,26 +67,12 @@ const getItemsById = (id) => {
 		});
 };
 const updateProject = (idProject, objt) => {
-	return updateDoc(doc(db, "projects", idProject), objt);
-};
-const readReq = (id) =>
-	onSnapshot(doc(db, "requirements", id), (doc) => {
-		console.log("Current data: ", doc.data().idProyecto);
-		updateProject(doc.data().idProyecto, { requerimientos: id });
-	});
-
-const addReqId = async (projId, reqId) => {
-	try {
-		await updateDoc(doc(db, "projects", projId), {
-            requirements: arrayUnion(reqId)
-        });
-	} catch (err) {
-		console.log(err);
-		console.log(err.stack);
-		console.log(err.message);
-	}
-};
-
+    return updateDoc(doc(db, "projects", idProject), objt);
+}
+const readReq = (id) => onSnapshot(doc(db, "requirements", id), (doc) => {
+    console.log("Current data: ", doc.data().idProyecto);
+    updateProject(doc.data().idProyecto, { requerimientos: id })
+});
 const getProjects = () => {
 	getDocs(collection(db, "projects"))
 		.then((Response) => {
@@ -109,17 +84,52 @@ const getProjects = () => {
 		})
 		.catch((error) => console.log(error));
 };
+// update
+/* const deleteProject = (id) => {
+    deleteDoc(doc(projectColRef, id));
+}; */
+
+const addRequirement = (idReq, objt) => {
+    return updateDoc(doc(db, "requirements", idReq), objt);
+}
+async function findReqByProj(id) {
+    const postsRef = collection(db, 'requirements');
+    const q = query(postsRef, where('proyectID', '==', id));
+    return onSnapshot(q, (snapshot) => snapshot);
+}
+const sortPendingOrders = (state, callback) => {
+    const data = query(ordersCollectionRef, where("state", "==", state), orderBy('date', 'desc'));
+    return onSnapshot(data, callback);
+}
+
+// añadir a imports setDoc y arrayUnion
+const deleteProject = async (id) => {
+    const docSnap = await getDoc(doc(db, 'projects', id));
+    let array = docSnap.data().requirements;
+    if(array.length > 0) {
+        array.forEach(reqId => {
+            deleteDoc(doc(collection(db, "requirements"), reqId));
+            console.log('deleting requirement', reqId)
+        });
+    }
+    deleteDoc(doc(projectColRef, id));
+};
+
+const addReqId = async (projId, reqId) => {
+    try {
+        await updateDoc(doc(db, "projects", projId), {
+            requirements: arrayUnion(reqId)
+        });
+    } catch (err) {
+        console.log(err);
+        console.log(err.stack);
+        console.log(err.message);
+    }
+};
 
 export {
-	addProject,
-	addRequer,
-	readReq,
-	getProjects,
-	projectColRef,
-	deleteProject,
-	addReq,
-	getItemsById,
-	referencia,
-	referenciaReq,
-    addReqId
+    addProject, addRequer, readReq, getProjects,
+    projectColRef, deleteProject, addReq, getItemsById,
+    referencia, referenciaReq, addRequirement, refByProject,
+    findReqByProj, refCol, addReqId
 };

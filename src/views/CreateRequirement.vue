@@ -11,8 +11,8 @@
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Tema </label>
         <div class="col-sm-5">
-          <select  v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
-            <option v-for="el in filterByPillar(topics)" :key="el.name" value="{{ el.name }}">{{ el.name }}</option>
+          <select v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
+            <option v-for="el in filterByPillar(topics)" :key="el.name" :value="el.pillar+'_'+el.name">{{ el.name }}</option>
           </select>
         </div>
       </div>
@@ -177,21 +177,22 @@ const getData = async () => {
 }
 
 const createReq = async (e) => {
+  const theme = themes.value.split('_')
   const newReq = {
-    theme: themes.value,
+    pillar: theme[1],
+    theme: theme[0],
     requirement: req.value,
     reqDescription: reqDescription.value,
     themeContent: content.value,
     responsable: responsable.value,
     expirationDate: eDate.value,
     formFile: formFile.value,
-    proyectID: docId
+    proyectID: docId,
+    status: "En Progreso",
+    date: new Date().toLocaleString()
   }
   console.log(newReq);
   e.target.reset()
-  /*console.log(projectThemes.value) */
-  //agregar el requerimiento al archivo por su id
-  //addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
 try {
     addReq(newReq)
    
