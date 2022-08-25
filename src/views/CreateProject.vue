@@ -7,110 +7,6 @@ let pStart = ref('')
 let pEnd = ref(null)
 let leader = ref(null)
 let standard = ref(null)
-let ambiental = ref([
-  { name: 'Materiales', bool: false },
-  { name: 'Energía', bool: false },
-  { name: 'Agua', bool: false }
-])
-let social = ref([
-  { name: 'Empleo', bool: false },
-  { name: 'Salud', bool: false },
-  { name: 'Trabajo', bool: false }
-])
-let gobierno = ref([])
-let customGobierno = ref('')
-const addCustomTopic = (topic, pillar) => {
-  topics.value.push({
-    name: topic,
-    bool: true,
-    pillar: pillar
-  })}
-const router = useRouter()
-const handleSubmit = (e) => {
-  const dataObj = {
-    name: pName.value,
-    start: pStart.value,
-    end: pEnd.value,
-    leader: leader.value,
-    standard: standard.value,
-  }
-  addProject(dataObj)
-    .then((res) => {
-      addRequer({
-        idProyecto: res.id,
-        ambiental: ambiental.value,
-        social: social.value,
-        gobierno: gobierno.value,
-        })
-    .then((res) => {
-      console.log(res)
-      console.log(res.id)
-      return readReq(res.id)
-      })
-      e.target.reset()
-      router.push('/pmo/projectRequirements')
-    }) 
-}
-</script>
-<!-- <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { addProject } from '../firebase.js'
-let pName = ref('')
-let pStart = ref('')
-let pEnd = ref(null)
-let leader = ref(null)
-let standard = ref(null)
-let ambiental = ref([
-  { name: 'Materiales', bool: false },
-  { name: 'Energía', bool: false },
-  { name: 'Agua', bool: false }
-])
-let social = ref([
-  { name: 'Empleo', bool: false },
-  { name: 'Salud', bool: false },
-  { name: 'Trabajo', bool: false }
-])
-let gobierno = ref([])
-const router = useRouter()
-const handleSubmit = (e) => {
-  const dataObj = {
-    name: pName.value,
-    start: pStart.value,
-    end: pEnd.value,
-    leader: leader.value,
-    standard: standard.value,
-    ambiental: ambiental.value,
-    social: social.value,
-    gobierno: gobierno.value
-  }
-  addProject(dataObj)
-    .then(() => {
-      e.target.reset()
-      router.push('/pmo/projectRequirements')
-    })
-}
-
-let customAmbiental = ref('')
-let customSocial = ref('')
-let customGobierno = ref('')
-const addCustomTopic = (topic, pillar) => {
-  pillar.push({
-    name: topic,
-    bool: true
-  })
-}
-</script> -->
-
-<!-- <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { addProject, addReq, updateProject } from '../firebase.js'
-let pName = ref('')
-let pStart = ref('')
-let pEnd = ref(null)
-let leader = ref(null)
-let standard = ref(null)
 let topics = ref([
   { name: 'Materiales', bool: false, pillar: 'Ambiental' },
   { name: 'Energía', bool: false, pillar: 'Ambiental' },
@@ -119,37 +15,7 @@ let topics = ref([
   { name: 'Salud', bool: false, pillar: 'Social' },
   { name: 'Trabajo', bool: false, pillar: 'Social' }
 ])
-const filterTopics = (topics, pillar) => {
-  return topics.filter(topic => topic.pillar === pillar)
-}
-
-const router = useRouter()
-const handleSubmit = async (e) => {
-  const dataObj = {
-    name: pName.value,
-    start: pStart.value,
-    end: pEnd.value,
-    leader: leader.value,
-    standard: standard.value,
-    topics: topics.value
-  }
-  const project = await addProject(dataObj)
-  console.log(project)
-  const id = project.id;
-  const requirement = await addReq({
-    ambiental: ambiental.value,
-    social: social.value,
-    gobierno: gobierno.value,
-    projectId: id
-  })
-  const reqId = requirement.id;
-  await updateProject({
-    requirementId: reqId
-  }, id)
-  e.target.reset()
-  router.push('/pmo/projectRequirements')
-}
-
+const filterByPillar = (pillar) => topics.value.filter(topic => topic.pillar === pillar)
 let customAmbiental = ref('')
 let customSocial = ref('')
 let customGobierno = ref('')
@@ -159,9 +25,38 @@ const addCustomTopic = (topic, pillar) => {
     bool: true,
     pillar: pillar
   })
-  // limpiar custom field
+  customAmbiental.value = ''
+  customSocial.value = ''
+  customGobierno.value = ''
 }
-</script> -->
+const router = useRouter()
+const handleSubmit = (e) => {
+  const dataObj = {
+    name: pName.value,
+    start: pStart.value,
+    end: pEnd.value,
+    leader: leader.value,
+    standard: standard.value,
+    topics: topics.value
+  }
+  addProject(dataObj)
+    .then((res) => {
+      addRequer({
+        idProyecto: res.id,
+        topics: topics.value
+      })
+        .then((res) => {
+          console.log(res)
+          console.log(res.id)
+          return readReq(res.id)
+        })
+      e.target.reset()
+      window.localStorage.setItem('ID', res.id)
+      console.log('hello', window.localStorage.getItem('ID'))
+      router.push('/pmo/projectRequirements')
+    })
+}
+</script>
 
 <template>
   <form class="p-4 mt-2 d-flex flex-column gap-2" @submit.prevent="handleSubmit" style="">
@@ -224,55 +119,15 @@ const addCustomTopic = (topic, pillar) => {
       </div>
     </div>
 
-<div class="row">
+    <div class="row">
       <div class="col-auto w-25">
         <label class="col-form-label fw-bold">Temas</label>
       </div>
       <div class="col-auto d-flex justify-content-between" style="width: 30%;">
         <div class="t-check">
-          <div v-for="(el, index) in ambiental" :key="index">
+          <div v-for="el in filterByPillar('Ambiental')" :key="el.name">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
-          </div>
-          <div>
-            <input v-model="customAmbiental" type="text" class="form-control">
-            <button @click="addCustomTopic(customAmbiental, ambiental)" type="button"
-              class="btn btn-light">Agregar</button>
-          </div>
-        </div>
-        <div class="t-check">
-          <div v-for="(el, index) in social" :key="index">
-            <input type="checkbox" :name="el" @click="el.bool = !el.bool">
-            <label for="el">{{ el.name }}</label>
-          </div>
-          <div>
-            <input v-model="customSocial" type="text" class="form-control">
-            <button @click="addCustomTopic(customSocial, social)" type="button" class="btn btn-light">Agregar</button>
-          </div>
-        </div>
-        <div class="t-check">
-          <div v-for="(e, index) in gobierno" :key="index">
-            <input type="checkbox" :name="el" @click="el.bool = !el.bool">
-            <label for="el">{{ el.name }}</label>
-          </div>
-          <div class="d-flex gap-1 flex-column">
-            <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
-            <button @click="addCustomTopic(customGobierno, gobierno)" type="button"
-              class="btn btn-light">Agregar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-<!-- <div class="row">
-      <div class="col-auto w-25">
-        <label class="col-form-label fw-bold">Temas</label>
-      </div>
-      <div class="col-auto d-flex justify-content-between" style="width: 30%;">
-        <div class="t-check">
-          <div v-for="topic in filterTopics(topics, 'Ambiental')" :key="topic.name">
-            <input type="checkbox" :name="topic.name" @click="topic.bool = !topic.bool">
-            <label for="topic.name">{{ topic.name }}</label>
           </div>
           <div>
             <input v-model="customAmbiental" type="text" class="form-control">
@@ -281,9 +136,9 @@ const addCustomTopic = (topic, pillar) => {
           </div>
         </div>
         <div class="t-check">
-          <div v-for="topic in filterTopics(topics, 'Social')">
-            <input type="checkbox" :name="topic.name" @click="topic.bool = !topic.bool">
-            <label for="topic.name">{{ topic.name }}</label>
+          <div v-for="el in filterByPillar('Social')" :key="el.name">
+            <input type="checkbox" :name="el" @click="el.bool = !el.bool">
+            <label for="el">{{ el.name }}</label>
           </div>
           <div>
             <input v-model="customSocial" type="text" class="form-control">
@@ -291,9 +146,9 @@ const addCustomTopic = (topic, pillar) => {
           </div>
         </div>
         <div class="t-check">
-          <div v-for="topic in filterTopics(topics, 'Gobierno')">
-            <input type="checkbox" :name="topic.name" @click="topic.bool = !topic.bool">
-            <label for="topic.name">{{ topic.name }}</label>
+          <div v-for="el in filterByPillar('Gobierno')" :key="el.name">
+            <input type="checkbox" :name="el" @click="el.bool = !el.bool">
+            <label for="el">{{ el.name }}</label>
           </div>
           <div class="d-flex gap-1 flex-column">
             <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
@@ -302,7 +157,7 @@ const addCustomTopic = (topic, pillar) => {
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="d-flex justify-content-center">
       <button type="submit" class="submit btn btn-outline-dark">Crear Proyecto</button>
     </div>
@@ -316,14 +171,12 @@ const addCustomTopic = (topic, pillar) => {
   align-items: center;
   width: 30%;
 }
-
 .t-check {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 30%;
 }
-
 .btn-outline-dark {
   background-color: rgb(219, 83, 106);
   color: white;

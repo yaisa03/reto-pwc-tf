@@ -1,6 +1,6 @@
 <template>
   <div class='container  row g-0 align-items-center'>
-    <form class='row g-30 '>
+    <form class='row g-30 ' @submit.prevent="createReq">
       <div class='Back'>
         <p>
           <button class='arrow' @click="projectRequirements"><img class="rounded-circle" src='../assets/FlechaIzq.png'
@@ -11,11 +11,8 @@
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Tema </label>
         <div class="col-sm-5">
-          <select v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
-            <option selected>Seleccionar</option>
-            <option value="1">Energia</option>
-            <option value="2">Agua</option>
-            <option value="3">Empleo</option>
+          <select  v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
+            <option v-for="el in filterByPillar(topics)" :key="el.name" value="{{ el.name }}">{{ el.name }}</option>
           </select>
         </div>
       </div>
@@ -72,7 +69,7 @@
           <input v-bind="formFile" class="form-control" type="file" id="formFileMultiple" multiple>
         </div>
       </div>
-      <button type="submit" @click="createReq" class="Btn">Crear requerimiento</button>
+      <button type="submit" class="Btn">Crear requerimiento</button>
     </form>
   </div>
 </template>
@@ -130,7 +127,7 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { doc, getDoc } from 'firebase/firestore'
-import { referencia, referenciaReq, addRequirement } from '../firebase.js'
+import { referencia, referenciaReq, addReq } from '../firebase.js'
 
 const router = useRouter()
 const projectRequirements = (e) => {
@@ -149,29 +146,29 @@ let eDate = ref('')
 let formFile = ref('')
 
 let project = ref([])
-/* let id = window.localStorage.getItem('ID')
-console.log(id) */
 const docRef = referencia(docId)
 
-let reqDoc = ref('')
-let reqInfo = ([])
+let topics = ref([])
+
+// let filtered = ref([])
+const filterByPillar = (arr) => {
+  console.log(arr)
+  const filtered = arr.filter(topic => topic.bool === true)
+  console.log(filtered)
+  return filtered
+}
 
 const getData = async () => {
-  /*     console.log('holi')
-      console.log(docId) */
-  // getDoc(docRef)
-  // .then((response) => console.log(response.data()))
   try {
     const myProject = await getDoc(docRef)
     project.value = myProject.data()
-    reqDoc.value = project.value.requerimientos
-    console.log(reqDoc.value)
+    topics.value = project.value.topics
+
+    console.log(topics.value)
     console.log(project.value)
-    console.log(reqDoc.value)
-    const getReqDoc = referenciaReq(reqDoc.value)
-    const projReq = await getDoc(getReqDoc)
-    reqInfo.value = projReq.data()
-    console.log(reqInfo.value)
+
+    // const filterByPillar=() => topics.value.filter(topic => topic.bool === true)
+
   } catch (err) {
     console.log(err)
     console.log(err.stack)
@@ -180,9 +177,7 @@ const getData = async () => {
 }
 
 const createReq = async (e) => {
-  e.preventDefault()
   const newReq = {
-    requerimiento:{
     theme: themes.value,
     requirement: req.value,
     reqDescription: reqDescription.value,
@@ -191,13 +186,15 @@ const createReq = async (e) => {
     expirationDate: eDate.value,
     formFile: formFile.value,
     proyectID: docId
-  }}
+  }
   console.log(newReq);
-  /*console.log(reqDoc.value) */
+  e.target.reset()
+  /*console.log(projectThemes.value) */
   //agregar el requerimiento al archivo por su id
   //addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
-  try {
-    addRequirement(reqDoc.value, newReq)
+try {
+    addReq(newReq)
+   
   } catch (err) {
     console.log(err)
     console.log(err.stack)
