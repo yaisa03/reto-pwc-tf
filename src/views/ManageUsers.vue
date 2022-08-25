@@ -12,7 +12,7 @@
             <th scope="col" width="15%">Nombre</th>
             <th scope="col" width="15%">Correo</th>
             <th scope="col" width="15%">Cargo</th>
-            <th scope="col" width="15%">Compañia</th>
+            <th scope="col" width="15%">Compañía</th>
           </tr>
       </thead>
       <tbody class="text-center">
@@ -20,19 +20,19 @@
           <td>Maria Caceres</td>
           <td>mariacaceres@compañia.com</td>
           <td>Gerente</td>
-          <td>Compañia A</td>
+          <td>Compañía A</td>
         </tr>
         <tr >
           <td>Lorena Alva</td>
           <td>lorena.alva@compañia.com</td>
           <td>Consultor</td>
-          <td>Compañia A</td>
+          <td>Compañía A</td>
         </tr>
         <tr >
           <td>Alvaro Olea</td>
           <td>alvaro.olea@compañia.com</td>
           <td>Consultor</td>
-          <td>Compañia B</td>
+          <td>Compañía B</td>
         </tr>
       </tbody>
     </table>
@@ -43,7 +43,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const createUser = () => {
   router.push('/pmo/createUser')
-  console.log(password.value, email.value)
 }
 </script>
 <style>

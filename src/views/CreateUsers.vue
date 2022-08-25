@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="row g-2  align-items-center ">
-        <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Compañia</label>
+        <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Compañía</label>
         <div class="col-sm-5">
           <input type="text" class="form-control" id="inputext" placeholder="Escribir">
         </div>

@@ -103,7 +103,6 @@ function getProjects() {
     arrReq.value = allRequirements
     console.log('requirements',requirements.value)
     console.log('requirements',requirements)
-    // selectId == requirements.proyectID
   })
 }
 const seeAllProjects = () => {
@@ -137,21 +136,6 @@ const done= computed(()=>{
 return finalFilter.value.filter(req => req.data.status === 'Completado').length
 
 })
-/* 
-const selectId = () => {
-     arrReq.value = requirements.value
-  window.localStorage.setItem('ID', currentProject.value)
-const filteredReq = arrReq.value.filter(req => req.data.proyectID === currentProject.value)
-arrReq.value = filteredReq
-} */
-
-/* 
-
-const byPillar = () => {
-    arrPillar.value = arrReq.value
-    const filtered =arrReq.value.filter(req => req.data.pillar ===selectedPillar.value)
-    arrReq.value = filteredReq
-} */
 
 onMounted(getProjects);
 </script>

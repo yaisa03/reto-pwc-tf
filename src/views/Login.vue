@@ -18,11 +18,7 @@ const pmo = () => {
         <img width='80' src='../assets/Logo-pwc.png' alt='Logo' />
         <img height='60' src='../assets/ESG-1.jpg' alt='Logo' />
       </div>
-      <!-- <div class="row">
-        <img class="col-1" width="70" src="../assets/Logo-pwc.png" alt="Logo" />
-        <img class="col-3 offset-3" height="70" src="../assets/ESG-1.jpg" alt="Logo" />
-      </div> -->
-      <h4 class="text-center mt-5">Iniciar Sesion</h4>
+      <h4 class="text-center mt-5">Iniciar Sesión</h4>
     </div>
     <ul class="nav justify-content-center">
       <li class="nav-item">
@@ -43,7 +39,7 @@ const pmo = () => {
       </div>
       <div class="d-flex justify-centerd-flex flex-column justify-content-center">
         <button class="bttn" @click="pmo">Ingresar a PMO</button>
-        <p>Olvide mi contraseña</p>
+        <p>Olvidé mi contraseña</p>
       </div>
     </form>
   </div>
