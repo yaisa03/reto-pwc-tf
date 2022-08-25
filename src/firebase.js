@@ -30,6 +30,9 @@ const db = getFirestore();
 const projectColRef = collection(db, "projects");
 const referencia = (id) => doc(db, "projects", id)
 const referenciaReq = (id) => doc(db, "requirements", id)
+const refCol = collection(db, "requirements");
+const refByProject = (id) => query(refCol, where('proyectID', '==', id))
+
 const addProject = (projectData) => {
     try {
         return addDoc(collection(db, "projects"), projectData);
@@ -87,4 +90,18 @@ const deleteProject = (id) => {
 const addRequirement = (idReq, objt) => {
     return updateDoc(doc(db, "requirements", idReq), objt);
 }
-export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getItemsById, referencia, referenciaReq, addRequirement };
+async function findReqByProj(id) {
+    const postsRef = collection(db, 'requirements');
+    const q =  query(postsRef, where('proyectID', '==', id));
+    return onSnapshot(q, (snapshot) => snapshot);
+  }
+const sortPendingOrders = (state, callback) => {
+    const data = query(ordersCollectionRef, where("state", "==", state), orderBy('date', 'desc'));
+    return onSnapshot(data, callback);
+  }
+  
+
+export { addProject, addRequer, readReq, getProjects, 
+    projectColRef, deleteProject, addReq, getItemsById, 
+    referencia, referenciaReq, addRequirement, refByProject,
+    findReqByProj, refCol };
