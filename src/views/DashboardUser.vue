@@ -47,8 +47,6 @@ onMounted(getProjects)
             <table class="table table-responsive align-middle table-hover">
                 <thead class="align-middle">
                     <tr class="bg-light text-center">
-                        <th scope="col" width="15%">Nombre de proyecto</th>
-                        <th scope="col" width="10%">Tema</th>
                         <th scope="col" width="15%">Requerimiento</th>
                         <th scope="col" width="10%">Tema</th>
                         <th scope="col" width="10%">Pilar</th>
