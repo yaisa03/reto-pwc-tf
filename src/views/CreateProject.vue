@@ -16,7 +16,6 @@ let topics = ref([
   { name: 'Trabajo', bool: false, pillar: 'Social' }
 ])
 const filterByPillar = (pillar) => topics.value.filter(topic => topic.pillar === pillar)
-
 let customAmbiental = ref('')
 let customSocial = ref('')
 let customGobierno = ref('')
@@ -53,8 +52,8 @@ const handleSubmit = (e) => {
           return readReq(res.id)
         })
       e.target.reset()
-      window.localStorage.setItem('LATESTPROJECT', res.id)
-      console.log('hello', window.localStorage.getItem('LATESTPROJECT'))
+      window.localStorage.setItem('ID', res.id)
+      console.log('hello', window.localStorage.getItem('ID'))
       router.push('/pmo/projectRequirements')
     })
 }
@@ -173,14 +172,12 @@ const handleSubmit = (e) => {
   align-items: center;
   width: 30%;
 }
-
 .t-check {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 30%;
 }
-
 .btn-outline-dark {
   background-color: rgb(219, 83, 106);
   color: white;

@@ -28,6 +28,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const projectColRef = collection(db, "projects");
 const referencia = (id) => doc(db, "projects", id);
+const referenciaReq = (id) => doc(db, "requirements", id)
 const addProject = (projectData) => {
 	try {
 		return addDoc(collection(db, "projects"), projectData);
@@ -35,6 +36,11 @@ const addProject = (projectData) => {
 		console.log(error);
 	}
 };
+// update
+const deleteProject = (id) => {
+	deleteDoc(doc(projectColRef, id));
+};
+
 const addRequer = (reqData) => {
 	try {
 		return addDoc(collection(db, "requirements"), reqData);
@@ -43,11 +49,11 @@ const addRequer = (reqData) => {
 	}
 };
 const addReq = (reqData) => {
-	try {
-		return addDoc(collection(db, "requirements"), reqData);
-	} catch (error) {
-		console.log(error);
-	}
+    try {
+        return addDoc(collection(db, "requirements"), reqData);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 const getItemsById = (id) => {
@@ -82,10 +88,6 @@ const getProjects = () => {
 		})
 		.catch((error) => console.log(error));
 };
-// update
-const deleteProject = (id) => {
-	deleteDoc(doc(projectColRef, id));
-};
 
 export {
 	addProject,
@@ -97,4 +99,5 @@ export {
 	addReq,
 	getItemsById,
 	referencia,
+    referenciaReq
 };

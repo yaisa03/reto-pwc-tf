@@ -1,6 +1,6 @@
 <template>
   <div class='container  row g-0 align-items-center'>
-    <form class='row g-30 '>
+    <form class='row g-30 ' @submit.prevent="createReq">
       <div class='Back'>
         <p>
           <button class='arrow' @click="projectRequirements"><img class="rounded-circle" src='../assets/FlechaIzq.png'
@@ -11,11 +11,8 @@
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Tema </label>
         <div class="col-sm-5">
-          <select v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
-            <option selected>Seleccionar</option>
-            <option value="1">Energia</option>
-            <option value="2">Agua</option>
-            <option value="3">Empleo</option>
+          <select  v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
+            <option v-for="el in filterByPillar(topics)" :key="el.name" value="{{ el.name }}">{{ el.name }}</option>
           </select>
         </div>
       </div>
@@ -51,7 +48,8 @@
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Responsable </label>
         <div class="col-sm-5">
-          <select v-model="responsable" @change="selectResponsable" class="form-select" aria-label="Default select example">
+          <select v-model="responsable" @change="selectResponsable" class="form-select"
+            aria-label="Default select example">
             <option selected>Seleccionar</option>
             <option value="Maria Caceres">Maria Caceres</option>
             <option value="Lorena Alva">Lorena Alva</option>
@@ -71,7 +69,7 @@
           <input v-bind="formFile" class="form-control" type="file" id="formFileMultiple" multiple>
         </div>
       </div>
-      <button type="submit" @click="createReq" class="Btn">Crear requerimiento</button>
+      <button type="submit" class="Btn">Crear requerimiento</button>
     </form>
   </div>
 </template>
@@ -129,7 +127,8 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { doc, getDoc } from 'firebase/firestore'
-import { getItemsById, addReq, referencia } from '../firebase.js'
+import { referencia, referenciaReq, addReq } from '../firebase.js'
+
 const router = useRouter()
 const projectRequirements = (e) => {
   e.preventDefault()
@@ -147,31 +146,37 @@ let eDate = ref('')
 let formFile = ref('')
 
 let project = ref([])
-let id = window.localStorage.getItem('ID')
-console.log(id)
-const docRef = referencia(id)
-let reqDoc = ref('')
+const docRef = referencia(docId)
 
-const getData = async () => {
-    console.log('holi')
-    console.log(docId)
-    // getDoc(docRef)
-    // .then((response) => console.log(response.data()))
-    try {
-        const myProject = await getDoc(docRef)
-        project.value = myProject.data()
-        reqDoc.value = project.value.requerimientos
-        console.log(reqDoc)
-        console.log(project.value)
-    } catch(err) {
-        console.log(err)
-        console.log(err.stack)
-        console.log(err.message)
-    }
+let topics = ref([])
+
+// let filtered = ref([])
+const filterByPillar = (arr) => {
+  console.log(arr)
+  const filtered = arr.filter(topic => topic.bool === true)
+  console.log(filtered)
+  return filtered
 }
 
-const createReq = (e) => {
-  e.preventDefault()
+const getData = async () => {
+  try {
+    const myProject = await getDoc(docRef)
+    project.value = myProject.data()
+    topics.value = project.value.topics
+
+    console.log(topics.value)
+    console.log(project.value)
+
+    // const filterByPillar=() => topics.value.filter(topic => topic.bool === true)
+
+  } catch (err) {
+    console.log(err)
+    console.log(err.stack)
+    console.log(err.message)
+  }
+}
+
+const createReq = async (e) => {
   const newReq = {
     theme: themes.value,
     requirement: req.value,
@@ -183,9 +188,18 @@ const createReq = (e) => {
     proyectID: docId
   }
   console.log(newReq);
-  console.log(reqDoc.value)
+  e.target.reset()
+  /*console.log(projectThemes.value) */
   //agregar el requerimiento al archivo por su id
- addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
+  //addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
+try {
+    addReq(newReq)
+   
+  } catch (err) {
+    console.log(err)
+    console.log(err.stack)
+    console.log(err.message)
+  }
 }
 
 onMounted(getData);
