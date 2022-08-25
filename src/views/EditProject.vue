@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { referencia } from '../firebase.js'
 const router = useRouter()
 let project = ref([])
-let id = window.localStorage.getItem('EDITID')
+let id = window.localStorage.getItem('ID')
 console.log(id)
 const docRef = referencia(id)
 
@@ -49,7 +49,6 @@ const addCustomTopic = (topic, pillar) => {
 </script>
 
 <template>
-    <h3>HOLA {{ project }}</h3>
     <form class="p-4 mt-2 d-flex flex-column gap-2" @submit.prevent="handleSubmit" style="">
         <div class="row g-3 align-items-center">
             <div class="col-auto w-25">

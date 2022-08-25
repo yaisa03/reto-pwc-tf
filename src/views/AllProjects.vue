@@ -15,10 +15,11 @@ function getProjects() {
         projects.value = allProjects
         loading.value = false
     })
+     window.localStorage.setItem('ID','')
 }
 
 function edit(id) {
-    window.localStorage.setItem('EDITID', id)
+    window.localStorage.setItem('ID', id)
     router.push('/pmo/editProject')
 }
 
@@ -52,7 +53,7 @@ onMounted(getProjects);
                 <h4 v-if="loading" class="d-flex justify-content-center">Loading...</h4>
                 <tbody v-for="p in projects" class="text-center">
                     <tr>
-                        <td @click="allProjects" class="text-start">{{ p.data.name }}</td>
+                        <td @click="allProjects" class="text-center">{{ p.data.name }}</td>
                         <td>{{ p.data.start }}</td>
                         <td>{{ p.data.end }}</td>
                         <td>{{ p.data.leader }}</td>
