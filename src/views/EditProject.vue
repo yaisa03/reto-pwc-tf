@@ -1,50 +1,28 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { doc, getDoc } from 'firebase/firestore'
+import { getDoc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
 import { referencia } from '../firebase.js'
-/* let pName = ref('')
-let pStart = ref('')
-let pEnd = ref(null)
-let leader = ref(null)
-let standard = ref(null)
-let ambiental = ref([
-    { name: 'Materiales', bool: false },
-    { name: 'Energía', bool: false },
-    { name: 'Agua', bool: false }
-])
-let social = ref([
-    { name: 'Empleo', bool: false },
-    { name: 'Salud', bool: false },
-    { name: 'Trabajo', bool: false }
-])
-let gobierno = ref([])
-let customGobierno = ref('')
-const addCustomTopic = (topic, pillar) => {
-    topics.value.push({
-        name: topic,
-        bool: true,
-        pillar: pillar
-    })
-} */
 const router = useRouter()
-/* const handleSubmit = (e) => {
-    router.push('/pmo/allProjects')
-} */
 let project = ref([])
 let id = window.localStorage.getItem('EDITID')
 console.log(id)
 const docRef = referencia(id)
 
+// let pName = ref('')
 const getData = async () => {
-    console.log('holi')
-    // getDoc(docRef)
-    // .then((response) => console.log(response.data()))
     try {
         const myProject = await getDoc(docRef)
         project.value = myProject.data()
-        console.log(project.value)
-    } catch(err) {
+        // console.log('name', project.value.name)
+        // pName.value = ref(project.value.name)
+        // console.log(pName.value)
+        // let pStart = ref('')
+        // let pEnd = ref(null)
+        // let leader = ref(null)
+        // let standard = ref(null)
+        // let topics = ref([])
+    } catch (err) {
         console.log(err)
         console.log(err.stack)
         console.log(err.message)
@@ -52,17 +30,34 @@ const getData = async () => {
 }
 
 onMounted(getData)
+
+let customAmbiental = ref('')
+let customSocial = ref('')
+let customGobierno = ref('')
+
+const addCustomTopic = (topic, pillar) => {
+  topics.value.push({
+    name: topic,
+    bool: true,
+    pillar: pillar
+  })
+  customAmbiental.value = ''
+  customSocial.value = ''
+  customGobierno.value = ''
+}
+
 </script>
 
-<!-- <template>
+<template>
+    <h3>HOLA {{ project }}</h3>
     <form class="p-4 mt-2 d-flex flex-column gap-2" @submit.prevent="handleSubmit" style="">
         <div class="row g-3 align-items-center">
             <div class="col-auto w-25">
                 <label for="pName" class="col-form-label fw-bold">Nombre del proyecto</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <input v-model="pName" type="text" id="pName" placeholder="Ejemplo: Reporte 23" class="form-control"
-                    required>
+                <input :value="project.name" type="text" id="pName" placeholder="Ejemplo: Reporte 23"
+                    class="form-control" required>
             </div>
         </div>
         <div class="row g-3 align-items-center">
@@ -70,7 +65,7 @@ onMounted(getData)
                 <label for="pStart" class="col-form-label fw-bold">Fecha de inicio</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <input v-model="pStart" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
+                <input :value="project.start" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
             </div>
         </div>
         <div class="row g-3 align-items-center">
@@ -78,7 +73,7 @@ onMounted(getData)
                 <label for="pEnd" class="col-form-label fw-bold">Fecha de fin</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <input v-model="pEnd" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
+                <input :value="project.end" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
             </div>
         </div>
         <div class="row g-3 align-items-center">
@@ -86,7 +81,7 @@ onMounted(getData)
                 <label for="leader" class="col-form-label fw-bold">Líder del proyecto</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <select v-model="leader" name="leader" class="form-select">
+                <select :value="project.leader" name="leader" class="form-select">
                     <option value="Maria Caceres">Maria Caceres</option>
                     <option value="Lorena Alva">Lorena Alva</option>
                     <option value="Alvaro Olea">Alvaro Olea</option>
@@ -98,7 +93,7 @@ onMounted(getData)
                 <label for="standard" class="col-form-label fw-bold">Estándar del proyecto</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <select v-model="standard" name="leader" class="form-select" aria-label="Default select example">
+                <select :value="project.standard" name="leader" class="form-select" aria-label="Default select example">
                     <option value="1">Estándar 1</option>
                     <option value="2">Estándar 2</option>
                     <option value="3">Estándar 3</option>
@@ -122,35 +117,35 @@ onMounted(getData)
             </div>
             <div class="col-auto d-flex justify-content-between" style="width: 30%;">
                 <div class="t-check">
-                    <div v-for="(el, index) in ambiental" :key="index">
-                        <input type="checkbox" :name="el" @click="el.bool = !el.bool">
-                        <label for="el">{{ el.name }}</label>
+                    <div v-for="el in project.topics" :key="el.name">
+                        <input v-if="el.pillar === 'Ambiental'" type="checkbox" :name="el" @click="el.bool = !el.bool" value="el.bool">
+                        <label v-if="el.pillar === 'Ambiental'">{{ el.name }}</label>
                     </div>
                     <div>
                         <input v-model="customAmbiental" type="text" class="form-control">
-                        <button @click="addCustomTopic(customAmbiental, ambiental)" type="button"
+                        <button @click="addCustomTopic(customAmbiental, 'Ambiental')" type="button"
                             class="btn btn-light">Agregar</button>
                     </div>
                 </div>
                 <div class="t-check">
-                    <div v-for="(el, index) in social" :key="index">
-                        <input type="checkbox" :name="el" @click="el.bool = !el.bool">
-                        <label for="el">{{ el.name }}</label>
+                    <div v-for="el in project.topics" :key="el.name">
+                        <input v-if="el.pillar === 'Social'" type="checkbox" :name="el" @click="el.bool = !el.bool" value="el.bool">
+                        <label v-if="el.pillar === 'Social'" for="el">{{ el.name }}</label>
                     </div>
                     <div>
                         <input v-model="customSocial" type="text" class="form-control">
-                        <button @click="addCustomTopic(customSocial, social)" type="button"
+                        <button @click="addCustomTopic(customSocial, 'Social')" type="button"
                             class="btn btn-light">Agregar</button>
                     </div>
                 </div>
                 <div class="t-check">
-                    <div v-for="(e, index) in gobierno" :key="index">
-                        <input type="checkbox" :name="el" @click="el.bool = !el.bool">
-                        <label for="el">{{ el.name }}</label>
+                    <div v-for="el in project.topics" :key="el.name">
+                        <input v-if="el.pillar === 'Gobierno'" type="checkbox" :name="el" @click="el.bool = !el.bool" value="el.bool">
+                        <label v-if="el.pillar === 'Gobierno'" for="el">{{ el.name }}</label>
                     </div>
                     <div class="d-flex gap-1 flex-column">
                         <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
-                        <button @click="addCustomTopic(customGobierno, gobierno)" type="button"
+                        <button @click="addCustomTopic(customGobierno, 'Gobierno')" type="button"
                             class="btn btn-light">Agregar</button>
                     </div>
                 </div>
@@ -159,11 +154,8 @@ onMounted(getData)
         <div class="d-flex justify-content-center">
             <button type="submit" class="submit btn btn-outline-dark">Crear Proyecto</button>
         </div>
+        -->
     </form>
-</template> -->
-
-<template>
-    <h1>HOLA {{ project }}</h1>
 </template>
 
 <style>
