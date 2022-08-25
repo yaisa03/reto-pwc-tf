@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { projectColRef, refCol } from '../firebase'
 import { onSnapshot } from '@firebase/firestore'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const projects = ref([])
 const requirements = ref([])
 const loading = ref(true)
@@ -26,17 +28,25 @@ function getProjects() {
     console.log(requirements.value)
   })
 }
+
+const reqId = ref('')
+ const compleateReq = (id) => {
+  router.push('/user/completeRequirement')
+  console.log(id)
+  reqId.value = id
+  window.localStorage.setItem('reqID', reqId.value)
+  console.log(window.localStorage.getItem('reqID'))
+}
+
 onMounted(getProjects);
 
 // seleccionar id de proyecto
 let currentProject = ref('')
 const selectId = async() => {
+    console.log(currentProject.value)
   window.localStorage.setItem('ID', currentProject.value)
   console.log(window.localStorage.getItem('ID'))
-  
-
 }
-
 // let idtocompRequirement = ref('')
 
 // function getIDProject(id){
@@ -80,13 +90,13 @@ const selectId = async() => {
                 <tbody class="text-center" >
                     <tr v-for="r in requirements">
                         <!-- <td ></td> -->
-                        <td>{{ r.data.theme }}</td>
+                        <td @click="compleateReq(r.id)">{{ r.data.theme }}</td>
                         <td style="cursor: pointer;"><router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}</router-link></td>
                         <td>{{ r.data.date }}</td>
                         <td>{{ r.data.expirationDate }}</td>
                         <td>{{ r.data.dateDelivered }}</td>
                         <td>{{ r.data.responsable }}</td>
-                        <td v-if="r.data.status==='En Progreso'"><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: #519;"></i><span class="ms-1">
+                        <td v-if="r.data.status!==''"><span class="ms-1">
                                 {{ r.data.status }}</span></td>
                         <td v-else><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: gray;"></i><span class="ms-1">Sin info</span></td>
                     </tr>

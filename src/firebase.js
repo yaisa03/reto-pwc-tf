@@ -138,11 +138,15 @@ const addOneReq = (onlyReqData) => {
     }
 };
 
+const updateReq = (id, objt) => {
+    return updateDoc(doc(db, "requirements", id), objt);
+}
+
 
 
 export {
     addProject, addRequer, readReq, getProjects,
     projectColRef, deleteProject, addReq, getItemsById,
     referencia, referenciaReq, addRequirement, refByProject,
-    findReqByProj, refCol, addReqId, addOneReq,
+    findReqByProj, refCol, addReqId, addOneReq, updateReq
 };
