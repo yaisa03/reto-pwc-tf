@@ -6,12 +6,18 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const projects = ref([])
 let currentProject = ref('')
+let requirements = ref([])
+let selectReq = ref([])
+
 const selectId = () => {
+    selectReq.value = requirements.value
+    console.log(selectReq.value)
     window.localStorage.setItem('ID', currentProject.value)
     console.log(window.localStorage.getItem('ID'))
+    let filteredReq = selectReq.value.filter(req => req.data.proyectID === currentProject.value)
+    console.log(filteredReq)
+    selectReq.value = filteredReq
 }
-
-let requirements = ref([])
 
 function getProjects() {
     onSnapshot(projectColRef, (snapshot) => {
@@ -27,6 +33,7 @@ function getProjects() {
             id: doc.id,
         }))
         requirements.value = allRequirements
+        selectReq.value = allRequirements
     })
 }
 
@@ -79,7 +86,7 @@ onMounted(getProjects);
                     </tr>
                 </thead>
                 <tbody class="text-center" >
-                    <tr v-for="r in requirements">
+                    <tr v-for="r in selectReq">
                         <td @click="compleateReq(r.id)">{{ r.data.theme }}</td>
                         <td style="cursor: pointer;"><router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}</router-link></td>
                         <td>{{ r.data.date }}</td>
