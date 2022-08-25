@@ -18,7 +18,7 @@
             <tr>
                 <td class="text-center">Vencido</td>
                 <td class="text-center">En proceso</td>
-                <td class="text-center">Comprobado</td>
+                <td class="text-center">Completado</td>
             </tr>
         </table>
         </section>
