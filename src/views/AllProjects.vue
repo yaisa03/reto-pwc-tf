@@ -18,7 +18,7 @@ function getProjects() {
 }
 
 function edit(id) {
-    window.localStorage.setItem('EDITID', id)
+    window.localStorage.setItem('ID', id)
     router.push('/pmo/editProject')
 }
 
