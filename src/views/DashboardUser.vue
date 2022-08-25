@@ -38,12 +38,12 @@ function getProjects() {
 }
 
 const reqId = ref('')
- const compleateReq = (id) => {
-  router.push('/user/completeRequirement')
-  console.log(id)
-  reqId.value = id
-  window.localStorage.setItem('reqID', reqId.value)
-  console.log(window.localStorage.getItem('reqID'))
+const compleateReq = (id) => {
+    router.push('/user/completeRequirement')
+    console.log(id)
+    reqId.value = id
+    window.localStorage.setItem('reqID', reqId.value)
+    console.log(window.localStorage.getItem('reqID'))
 }
 
 onMounted(getProjects);
@@ -85,17 +85,33 @@ onMounted(getProjects);
                         <th scope="col" width="15%">Estatus</th>
                     </tr>
                 </thead>
-                <tbody class="text-center" >
+                <tbody class="text-center">
                     <tr v-for="r in selectReq">
                         <td @click="compleateReq(r.id)">{{ r.data.theme }}</td>
-                        <td style="cursor: pointer;"><router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}</router-link></td>
+                        <td style="cursor: pointer;">
+                            <router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}
+                            </router-link>
+                        </td>
                         <td>{{ r.data.date }}</td>
                         <td>{{ r.data.expirationDate }}</td>
                         <td>{{ r.data.newDate }}</td>
                         <td>{{ r.data.responsable }}</td>
-                        <td v-if="r.data.status!==''"><span class="ms-1">
-                                {{ r.data.status }}</span></td>
-                        <td v-else><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: gray;"></i><span class="ms-1">Sin info</span></td>
+                        <td v-if="r.data.status === 'En Progreso'">
+                            <i class="bi bi-circle-fill" style="font-size: 1.5rem; color: rgb(255, 182, 0);"></i>
+                            <span class="ms-1">{{ r.data.status }}</span>
+                        </td>
+                        <td v-else-if="r.data.status === 'Completado'">
+                            <i class="bi bi-circle-fill" style="font-size: 1.5rem; color: green;"></i>
+                            <span class="ms-1">{{ r.data.status }}</span>
+                        </td>
+                        <td v-else-if="r.data.status === 'Vencido'">
+                            <i class="bi bi-circle-fill" style="font-size: 1.5rem; color: red;"></i>
+                            <span class="ms-1">{{ r.data.status }}</span>
+                        </td>
+                        <td v-else>
+                            <i class="bi bi-circle-fill" style="font-size: 1.5rem; color: gray;"></i>
+                            <span class="ms-1">Sin seguimiento</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -1,15 +1,22 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { projectColRef, refCol } from '../firebase'
 import { onSnapshot } from '@firebase/firestore'
+
 const projects = ref([])
 const router = useRouter()
+let selectReq = ref([])
 // antes del onMounted()
 let currentProject = ref('')
+
 const selectId = () => {
+  selectReq.value = requirements.value
   window.localStorage.setItem('ID', currentProject.value)
   console.log(window.localStorage.getItem('ID'))
+  let filteredReq = selectReq.value.filter(req => req.data.proyectID === currentProject.value)
+  console.log(filteredReq)
+  selectReq.value = filteredReq
 }
 
 let requirements = ref([])
@@ -28,6 +35,7 @@ function getProjects() {
       id: doc.id,
     }))
     requirements.value = allRequirements
+    selectReq.value = allRequirements
   })
 }
 const createReq = () => {
@@ -82,7 +90,7 @@ onMounted(getProjects)
           </tr>
         </thead>
         <tbody class="text-center">
-          <tr v-for="r in requirements">
+          <tr v-for="r in selectReq">
             <td>{{ r.data.pillar }}</td>
             <td>{{ r.data.theme }}</td>
             <td>{{ r.data.requirement }}</td>
