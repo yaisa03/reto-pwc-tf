@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { addProject, addRequer, readReq } from '../firebase.js'
+import { addProject, addRequer, readReq, addReqId } from '../firebase.js'
 let pName = ref('')
 let pStart = ref('')
 let pEnd = ref(null)
@@ -19,6 +19,7 @@ const filterByPillar = (pillar) => topics.value.filter(topic => topic.pillar ===
 let customAmbiental = ref('')
 let customSocial = ref('')
 let customGobierno = ref('')
+
 const addCustomTopic = (topic, pillar) => {
   topics.value.push({
     name: topic,
@@ -37,7 +38,8 @@ const handleSubmit = (e) => {
     end: pEnd.value,
     leader: leader.value,
     standard: standard.value,
-    topics: topics.value
+    topics: topics.value,
+    requirements: [],
   }
     addProject(dataObj)
     .then((res) => {
@@ -174,17 +176,20 @@ const handleSubmit = (e) => {
   align-items: center;
   width: 30%;
 }
+
 .t-check {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 30%;
 }
+
 .btn-outline-dark {
   background-color: rgb(219, 83, 106);
   color: white;
   border: none;
 }
+
 .submit {
   background-color: rgb(219, 83, 106);
   color: white;
