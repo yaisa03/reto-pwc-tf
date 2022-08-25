@@ -2,26 +2,17 @@
 import { onMounted, ref } from 'vue'
 import { getDoc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
-import { referencia } from '../firebase.js'
+import { referencia, editProject } from '../firebase.js'
 const router = useRouter()
 let project = ref([])
 let id = window.localStorage.getItem('ID')
 console.log(id)
 const docRef = referencia(id)
 
-// let pName = ref('')
 const getData = async () => {
     try {
         const myProject = await getDoc(docRef)
         project.value = myProject.data()
-        // console.log('name', project.value.name)
-        // pName.value = ref(project.value.name)
-        // console.log(pName.value)
-        // let pStart = ref('')
-        // let pEnd = ref(null)
-        // let leader = ref(null)
-        // let standard = ref(null)
-        // let topics = ref([])
     } catch (err) {
         console.log(err)
         console.log(err.stack)
@@ -36,14 +27,30 @@ let customSocial = ref('')
 let customGobierno = ref('')
 
 const addCustomTopic = (topic, pillar) => {
-  topics.value.push({
-    name: topic,
-    bool: true,
-    pillar: pillar
-  })
-  customAmbiental.value = ''
-  customSocial.value = ''
-  customGobierno.value = ''
+    project.value.topics.push({
+        name: topic,
+        bool: true,
+        pillar: pillar
+    })
+    customAmbiental.value = ''
+    customSocial.value = ''
+    customGobierno.value = ''
+}
+
+const handleSubmit = (e) => {
+    const dataObj = {
+        name: project.value.name,
+        start: project.value.start,
+        end: project.value.end,
+        leader: project.value.leader,
+        standard: project.value.standard,
+        topics: project.value.topics,
+        requirements: project.value.requirements,
+    }
+    console.log('passing this id', id)
+    editProject(id, dataObj)
+    e.target.reset()
+    router.push('/pmo/allProjects')
 }
 
 </script>
@@ -55,7 +62,7 @@ const addCustomTopic = (topic, pillar) => {
                 <label for="pName" class="col-form-label fw-bold">Nombre del proyecto</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <input :value="project.name" type="text" id="pName" placeholder="Ejemplo: Reporte 23"
+                <input v-model="project.name" type="text" id="pName" placeholder="Ejemplo: Reporte 23"
                     class="form-control" required>
             </div>
         </div>
@@ -64,7 +71,7 @@ const addCustomTopic = (topic, pillar) => {
                 <label for="pStart" class="col-form-label fw-bold">Fecha de inicio</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <input :value="project.start" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
+                <input v-model="project.start" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
             </div>
         </div>
         <div class="row g-3 align-items-center">
@@ -72,7 +79,7 @@ const addCustomTopic = (topic, pillar) => {
                 <label for="pEnd" class="col-form-label fw-bold">Fecha de fin</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <input :value="project.end" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
+                <input v-model="project.end" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
             </div>
         </div>
         <div class="row g-3 align-items-center">
@@ -80,7 +87,7 @@ const addCustomTopic = (topic, pillar) => {
                 <label for="leader" class="col-form-label fw-bold">Líder del proyecto</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <select :value="project.leader" name="leader" class="form-select">
+                <select v-model="project.leader" name="leader" class="form-select">
                     <option value="Maria Caceres">Maria Caceres</option>
                     <option value="Lorena Alva">Lorena Alva</option>
                     <option value="Alvaro Olea">Alvaro Olea</option>
@@ -92,7 +99,8 @@ const addCustomTopic = (topic, pillar) => {
                 <label for="standard" class="col-form-label fw-bold">Estándar del proyecto</label>
             </div>
             <div class="col-auto" style="width: 30%;">
-                <select :value="project.standard" name="leader" class="form-select" aria-label="Default select example">
+                <select v-model="project.standard" name="leader" class="form-select"
+                    aria-label="Default select example">
                     <option value="1">Estándar 1</option>
                     <option value="2">Estándar 2</option>
                     <option value="3">Estándar 3</option>
@@ -117,7 +125,10 @@ const addCustomTopic = (topic, pillar) => {
             <div class="col-auto d-flex justify-content-between" style="width: 30%;">
                 <div class="t-check">
                     <div v-for="el in project.topics" :key="el.name">
-                        <input v-if="el.pillar === 'Ambiental'" type="checkbox" :name="el" @click="el.bool = !el.bool" value="el.bool">
+                        <input v-if="el.pillar === 'Ambiental' && el.bool === true" type="checkbox" :name="el"
+                            @click="el.bool = !el.bool" value="el.bool" checked>
+                        <input v-if="el.pillar === 'Ambiental' && el.bool === false" type="checkbox" :name="el"
+                            @click="el.bool = !el.bool" value="el.bool">
                         <label v-if="el.pillar === 'Ambiental'">{{ el.name }}</label>
                     </div>
                     <div>
@@ -128,7 +139,10 @@ const addCustomTopic = (topic, pillar) => {
                 </div>
                 <div class="t-check">
                     <div v-for="el in project.topics" :key="el.name">
-                        <input v-if="el.pillar === 'Social'" type="checkbox" :name="el" @click="el.bool = !el.bool" value="el.bool">
+                        <input v-if="el.pillar === 'Social' && el.bool === true" type="checkbox" :name="el"
+                            @click="el.bool = !el.bool" value="el.bool" checked>
+                        <input v-if="el.pillar === 'Social' && el.bool === false" type="checkbox" :name="el"
+                            @click="el.bool = !el.bool" value="el.bool">
                         <label v-if="el.pillar === 'Social'" for="el">{{ el.name }}</label>
                     </div>
                     <div>
@@ -139,7 +153,10 @@ const addCustomTopic = (topic, pillar) => {
                 </div>
                 <div class="t-check">
                     <div v-for="el in project.topics" :key="el.name">
-                        <input v-if="el.pillar === 'Gobierno'" type="checkbox" :name="el" @click="el.bool = !el.bool" value="el.bool">
+                        <input v-if="el.pillar === 'Gobierno' && el.bool === true" type="checkbox" :name="el"
+                            @click="el.bool = !el.bool" value="el.bool" checked>
+                        <input v-if="el.pillar === 'Gobierno' && el.bool === false" type="checkbox" :name="el"
+                            @click="el.bool = !el.bool" value="el.bool">
                         <label v-if="el.pillar === 'Gobierno'" for="el">{{ el.name }}</label>
                     </div>
                     <div class="d-flex gap-1 flex-column">
@@ -151,9 +168,8 @@ const addCustomTopic = (topic, pillar) => {
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <button type="submit" class="submit btn btn-outline-dark">Crear Proyecto</button>
+            <button type="submit" class="submit btn btn-outline-dark">Guardar cambios</button>
         </div>
-        -->
     </form>
 </template>
 

@@ -65,10 +65,10 @@ onMounted(getProjects)
       </div>
     </div>
     <div class="row align-items-center">
-      <div class="w-90 d-flex justify-content-end">
-        <img width="55" height="55" src="../assets/Edit.png" alt="Edit" />
-        <img @click="createReq" height="50" width="50" src="../assets/Crear.png" alt="Crear" />
-        <img width="50" height="50" src="../assets/Borrar.png" alt="Borrar" />
+      <div class="w-90 d-flex justify-content-end"><!-- 
+        <img width="55" height="55" src="../assets/Edit.png" alt="Edit" /> -->
+        <img @click="createReq" height="50" width="50" src="../assets/Crear.png" alt="Crear" style="cursor: pointer;"/>
+        <!-- <img width="50" height="50" src="../assets/Borrar.png" alt="Borrar" /> -->
       </div>
     </div>
   </div>

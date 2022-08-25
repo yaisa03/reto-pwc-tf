@@ -133,13 +133,13 @@ onMounted(getData)
     </div>
     </form>
     
-    <div class="mb-3 d-flex send">
+ <!--    <div class="mb-3 d-flex send">
         <div class="d-flex flex-column m-2">
             <label class="form-label">Evidencia de soporte</label>
             <button type="submit" class="btn bttn">Iniciar</button>
         </div>
         <input type="text" class="col-7">
-    </div>
+    </div> -->
     <br>
 </template>
 

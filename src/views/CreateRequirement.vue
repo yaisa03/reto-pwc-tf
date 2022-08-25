@@ -21,11 +21,11 @@
         <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Requerimiento</label>
         <div class="col-sm-5 ">
           <input v-model="req" type="text" class="form-control" id="inputext" placeholder="Escribir">
-          <div class='Referencer'>
+          <!-- <div class='Referencer'>
             <p class='ref'>Referenciar</p>
             <button class='arrowRight'><img height='33' class="rounded-circle" src='../assets/flechaRicht.png'
                 alt='Logo' /></button>
-          </div>
+          </div> -->
         </div>
 
       </div>
