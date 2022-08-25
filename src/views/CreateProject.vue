@@ -53,6 +53,8 @@ const handleSubmit = (e) => {
           return readReq(res.id)
         })
       e.target.reset()
+      window.localStorage.setItem('LATESTPROJECT', res.id)
+      console.log('hello', window.localStorage.getItem('LATESTPROJECT'))
       router.push('/pmo/projectRequirements')
     })
 }
