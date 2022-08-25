@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { projectColRef, refCol } from '../firebase'
 import { onSnapshot } from '@firebase/firestore'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const projects = ref([])
 let currentProject = ref('')
 const selectId = () => {
@@ -28,7 +30,35 @@ function getProjects() {
     })
 }
 
-onMounted(getProjects)
+const reqId = ref('')
+ const compleateReq = (id) => {
+  router.push('/user/completeRequirement')
+  console.log(id)
+  reqId.value = id
+  window.localStorage.setItem('reqID', reqId.value)
+  console.log(window.localStorage.getItem('reqID'))
+}
+
+onMounted(getProjects);
+
+// seleccionar id de proyecto
+let currentProject = ref('')
+const selectId = async() => {
+    console.log(currentProject.value)
+  window.localStorage.setItem('ID', currentProject.value)
+  console.log(window.localStorage.getItem('ID'))
+}
+// let idtocompRequirement = ref('')
+
+// function getIDProject(id){
+//     idtocompRequirement.value=id
+//     window.localStorage.setItem('IDtoCompReq', idtocompRequirement.value)
+//     console.log(window.localStorage.getItem('IDtoCompReq'))
+
+// }
+
+//   busque en la coleccion de requerimientos aquellos  que tengan ese id de proyecto
+
 </script>
 <template>
     <div class="row g-3 align-items-center mt-1 w-50 p-3">
@@ -58,14 +88,15 @@ onMounted(getProjects)
                 </thead>
                 <tbody class="text-center">
                     <tr v-for="r in requirements">
-                        <td>{{ r.data.requirement }}</td>
-                        <td>{{ r.data.theme }}</td>
-                        <td>{{ r.data.pillar }}</td>
+                        <td @click="compleateReq(r.id)">{{ r.data.theme }}</td>
+                        <td style="cursor: pointer;"><router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}</router-link></td>
                         <td>{{ r.data.date }}</td>
                         <td>{{ r.data.expirationDate }}</td>
+                        <td>{{ r.data.newDate }}</td>
                         <td>{{ r.data.responsable }}</td>
-                        <td><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: #519;"></i><span
-                                class="ms-1">{{ r.data.status }}</span></td>
+                        <td v-if="r.data.status!==''"><span class="ms-1">
+                                {{ r.data.status }}</span></td>
+                        <td v-else><i class="bi bi-circle-fill" style="font-size: 1.5rem; color: gray;"></i><span class="ms-1">Sin info</span></td>
                     </tr>
                 </tbody>
             </table>

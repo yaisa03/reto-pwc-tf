@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue'
-import { addOneReq } from '../firebase'
+import { addOneReq, referencia, referenciaReq, updateReq } from '../firebase'
+import { ref, onMounted } from 'vue';
+import { getDoc } from '@firebase/firestore'
 
 let detailReq = ref('')
 let dateReq = ref('')
@@ -19,35 +20,57 @@ const handleSubmit = (e) =>{
     .then((res) => {
         console.log(res)
         e.target.reset()
-        })
+        updateReq(window.localStorage.getItem('reqID'), {...myReq, status: "Completado", newDate: new Date().toLocaleString()})
+    })
 }
+
+const docRef = referencia(window.localStorage.getItem('ID'))
+const reqRef = referenciaReq(window.localStorage.getItem('reqID'))
+const project = ref('')
+const req = ref('')
+const getData = async () => {
+    try {
+        const myProject = await getDoc(docRef)
+        project.value = myProject.data()
+        console.log('name', project.value)
+        const myReq = await getDoc(reqRef)
+        req.value = myReq.data()
+        console.log('req', req.value)
+    } catch (err) {
+        console.log(err)
+        console.log(err.stack)
+        console.log(err.message)
+    }
+}
+
+onMounted(getData)
 
 </script>
 <template>
     <ul class="list-group list-group-horizontal mt-3">
         <li class="list-group-item  flex-fill bg-light">
             <p class="fw-bold">Nombre del proyecto</p>
-            <p></p>
+            <p>{{project.name}}</p>
         </li>
         <li class="list-group-item  flex-fill bg-light">
             <p class="fw-bold">Requerimiento</p>
-            <p></p>
+            <p>{{req.requirement}}</p>
         </li>
         <li class="list-group-item  flex-fill bg-light">
             <p class="fw-bold">Descripción del Requerimiento</p>
-            <p></p>
+            <p>{{req.reqDescription}}</p>
         </li>
         <li class="list-group-item  flex-fill bg-light">
             <p class="fw-bold">Fecha de creación</p>
-            <p></p>
+            <p>{{req.date}}</p>
         </li>
         <li class="list-group-item  flex-fill bg-light">
             <p class="fw-bold">Fecha de Vencimiento</p>
-            <p></p>
+            <p>{{project.end}}</p>
         </li>
         <li class="list-group-item  flex-fill bg-light">
             <p class="fw-bold">Estatus</p>
-            <p></p>
+            <p>{{req.status}}</p>
         </li>
     </ul>
     <form class="p-4 mt-2 d-flex flex-column gap-4" @submit.prevent="handleSubmit" >
