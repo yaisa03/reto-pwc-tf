@@ -45,10 +45,10 @@ onMounted(getProjects)
 
 <template>
   <div class="w-90 d-flex justify-content-first mt-2">
-    <p>
-      <img @click="create" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
-      Creacion de Proyecto Reporte 22
-    </p>
+    <div class="d-flex flex-row">
+    <p><img @click="allProjects" width="50" src="../assets/FlechaIzq.png" alt="FechaIzq" />
+      Ir a todos los proyectos </p>
+  </div>
   </div>
   <div class="d-flex flex-row justify-content-between me-5 ms-5">
     <div>
