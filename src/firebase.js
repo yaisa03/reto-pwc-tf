@@ -29,6 +29,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const projectColRef = collection(db, "projects");
 const referencia = (id) => doc(db, "projects", id)
+const referenciaReq = (id) => doc(db, "requirements", id)
 const addProject = (projectData) => {
     try {
         return addDoc(collection(db, "projects"), projectData);
@@ -44,28 +45,28 @@ const addRequer = (reqData) => {
     }
 };
 const addReq = (reqData) => {
-	try {
-		return addDoc(collection(db, "requirements"), reqData);
-	} catch (error) {
-		console.log(error);
-	}
+    try {
+        return addDoc(collection(db, "requirements"), reqData);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 const getItemsById = (id) => {
-	getDoc(doc(db, 'projects', id))
-		.then((item) => {
-			return {
-				id: item.id,
-				data: item.data()
-			}
-		}).catch((err) => { console.log(err.message) });
+    getDoc(doc(db, 'projects', id))
+        .then((item) => {
+            return {
+                id: item.id,
+                data: item.data()
+            }
+        }).catch((err) => { console.log(err.message) });
 };
-const updateProject =(idProject, objt) =>{
+const updateProject = (idProject, objt) => {
     return updateDoc(doc(db, "projects", idProject), objt);
 }
 const readReq = (id) => onSnapshot(doc(db, "requirements", id), (doc) => {
     console.log("Current data: ", doc.data().idProyecto);
-    updateProject(doc.data().idProyecto, {requerimientos: id})
+    updateProject(doc.data().idProyecto, { requerimientos: id })
 });
 const getProjects = () => {
     getDocs(collection(db, "projects"))
@@ -82,4 +83,8 @@ const getProjects = () => {
 const deleteProject = (id) => {
     deleteDoc(doc(projectColRef, id));
 };
-export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getItemsById, referencia };
+
+const addRequirement = (idReq, objt) => {
+    return updateDoc(doc(db, "requirements", idReq), objt);
+}
+export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getItemsById, referencia, referenciaReq, addRequirement };

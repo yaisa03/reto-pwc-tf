@@ -51,7 +51,8 @@
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Responsable </label>
         <div class="col-sm-5">
-          <select v-model="responsable" @change="selectResponsable" class="form-select" aria-label="Default select example">
+          <select v-model="responsable" @change="selectResponsable" class="form-select"
+            aria-label="Default select example">
             <option selected>Seleccionar</option>
             <option value="Maria Caceres">Maria Caceres</option>
             <option value="Lorena Alva">Lorena Alva</option>
@@ -129,7 +130,8 @@
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { doc, getDoc } from 'firebase/firestore'
-import { getItemsById, addReq, referencia } from '../firebase.js'
+import { referencia, referenciaReq, addRequirement } from '../firebase.js'
+
 const router = useRouter()
 const projectRequirements = (e) => {
   e.preventDefault()
@@ -147,32 +149,40 @@ let eDate = ref('')
 let formFile = ref('')
 
 let project = ref([])
-let id = window.localStorage.getItem('ID')
-console.log(id)
-const docRef = referencia(id)
+/* let id = window.localStorage.getItem('ID')
+console.log(id) */
+const docRef = referencia(docId)
+
 let reqDoc = ref('')
+let reqInfo = ([])
 
 const getData = async () => {
-    console.log('holi')
-    console.log(docId)
-    // getDoc(docRef)
-    // .then((response) => console.log(response.data()))
-    try {
-        const myProject = await getDoc(docRef)
-        project.value = myProject.data()
-        reqDoc.value = project.value.requerimientos
-        console.log(reqDoc)
-        console.log(project.value)
-    } catch(err) {
-        console.log(err)
-        console.log(err.stack)
-        console.log(err.message)
-    }
+  /*     console.log('holi')
+      console.log(docId) */
+  // getDoc(docRef)
+  // .then((response) => console.log(response.data()))
+  try {
+    const myProject = await getDoc(docRef)
+    project.value = myProject.data()
+    reqDoc.value = project.value.requerimientos
+    console.log(reqDoc.value)
+    console.log(project.value)
+    console.log(reqDoc.value)
+    const getReqDoc = referenciaReq(reqDoc.value)
+    const projReq = await getDoc(getReqDoc)
+    reqInfo.value = projReq.data()
+    console.log(reqInfo.value)
+  } catch (err) {
+    console.log(err)
+    console.log(err.stack)
+    console.log(err.message)
+  }
 }
 
-const createReq = (e) => {
+const createReq = async (e) => {
   e.preventDefault()
   const newReq = {
+    requerimiento:{
     theme: themes.value,
     requirement: req.value,
     reqDescription: reqDescription.value,
@@ -181,11 +191,18 @@ const createReq = (e) => {
     expirationDate: eDate.value,
     formFile: formFile.value,
     proyectID: docId
-  }
+  }}
   console.log(newReq);
-  console.log(reqDoc.value)
+  /*console.log(reqDoc.value) */
   //agregar el requerimiento al archivo por su id
- addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
+  //addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
+  try {
+    addRequirement(reqDoc.value, newReq)
+  } catch (err) {
+    console.log(err)
+    console.log(err.stack)
+    console.log(err.message)
+  }
 }
 
 onMounted(getData);
