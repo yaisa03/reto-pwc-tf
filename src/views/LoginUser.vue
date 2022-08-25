@@ -13,18 +13,22 @@ const user = () => {
 <template>
   <div class="container vh-100 d-flex flex-column justify-content-center align-items-center">
     <div class="d-flex justify-centerd-flex flex-column justify-content-center">
-      <div class="row">
+      <div class="mb-5 d-flex gap-5 p-2">
+        <img width='80' src='../assets/Logo-pwc.png' alt='Logo' />
+        <img height='60' src='../assets/ESG-1.jpg' alt='Logo' />
+      </div>
+      <!-- <div class="row">
         <img class="col-1" width="70" src="../assets/Logo-pwc.png" alt="Logo" />
         <img class="col-3 offset-3" height="70" src="../assets/ESG-1.jpg" alt="Logo" />
-      </div>
-      <h4 class="text-center">Iniciar Sesion</h4>
+      </div> -->
+      <h4 class="text-center mt-5">Iniciar Sesion</h4>
     </div>
     <ul class="nav justify-content-center">
       <li class="nav-item">
         <router-link class="nav-link active text-dark" to="/loginPMO">PMO</router-link>
       </li>
-      <li class="nav-item">
-        <router-link class="nav-link active text-dark" to="/loginUser">Usuario de negocio</router-link>
+      <li class="nav-item ">
+        <router-link class="nav-link active text-dark border-bottom border-warning" to="/loginUser">Usuario de negocio</router-link>
       </li>
     </ul>
     <form class="w-50">
