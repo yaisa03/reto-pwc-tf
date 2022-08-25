@@ -7,24 +7,29 @@ let pStart = ref('')
 let pEnd = ref(null)
 let leader = ref(null)
 let standard = ref(null)
-let ambiental = ref([
-  { name: 'Materiales', bool: false },
-  { name: 'Energía', bool: false },
-  { name: 'Agua', bool: false }
+let topics = ref([
+  { name: 'Materiales', bool: false, pillar: 'Ambiental' },
+  { name: 'Energía', bool: false, pillar: 'Ambiental' },
+  { name: 'Agua', bool: false, pillar: 'Ambiental' },
+  { name: 'Empleo', bool: false, pillar: 'Social' },
+  { name: 'Salud', bool: false, pillar: 'Social' },
+  { name: 'Trabajo', bool: false, pillar: 'Social' }
 ])
-let social = ref([
-  { name: 'Empleo', bool: false },
-  { name: 'Salud', bool: false },
-  { name: 'Trabajo', bool: false }
-])
-let gobierno = ref([])
+const filterByPillar = (pillar) => topics.value.filter(topic => topic.pillar === pillar)
+
+let customAmbiental = ref('')
+let customSocial = ref('')
 let customGobierno = ref('')
+
 const addCustomTopic = (topic, pillar) => {
   topics.value.push({
     name: topic,
     bool: true,
     pillar: pillar
   })
+  customAmbiental.value = ''
+  customSocial.value = ''
+  customGobierno.value = ''
 }
 const router = useRouter()
 const handleSubmit = (e) => {
@@ -34,14 +39,13 @@ const handleSubmit = (e) => {
     end: pEnd.value,
     leader: leader.value,
     standard: standard.value,
+    topics: topics.value
   }
   addProject(dataObj)
     .then((res) => {
       addRequer({
         idProyecto: res.id,
-        ambiental: ambiental.value,
-        social: social.value,
-        gobierno: gobierno.value,
+        topics: topics.value
       })
         .then((res) => {
           console.log(res)
@@ -121,34 +125,34 @@ const handleSubmit = (e) => {
       </div>
       <div class="col-auto d-flex justify-content-between" style="width: 30%;">
         <div class="t-check">
-          <div v-for="(el, index) in ambiental" :key="index">
+          <div v-for="el in filterByPillar('Ambiental')" :key="el.name">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
             <input v-model="customAmbiental" type="text" class="form-control">
-            <button @click="addCustomTopic(customAmbiental, ambiental)" type="button"
+            <button @click="addCustomTopic(customAmbiental, 'Ambiental')" type="button"
               class="btn btn-light">Agregar</button>
           </div>
         </div>
         <div class="t-check">
-          <div v-for="(el, index) in social" :key="index">
+          <div v-for="el in filterByPillar('Social')" :key="el.name">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
           <div>
             <input v-model="customSocial" type="text" class="form-control">
-            <button @click="addCustomTopic(customSocial, social)" type="button" class="btn btn-light">Agregar</button>
+            <button @click="addCustomTopic(customSocial, 'Social')" type="button" class="btn btn-light">Agregar</button>
           </div>
         </div>
         <div class="t-check">
-          <div v-for="(e, index) in gobierno" :key="index">
+          <div v-for="el in filterByPillar('Gobierno')" :key="el.name">
             <input type="checkbox" :name="el" @click="el.bool = !el.bool">
             <label for="el">{{ el.name }}</label>
           </div>
           <div class="d-flex gap-1 flex-column">
             <input v-model="customGobierno" type="text" class="form-control" placeholder="Añadir">
-            <button @click="addCustomTopic(customGobierno, gobierno)" type="button"
+            <button @click="addCustomTopic(customGobierno, 'Gobierno')" type="button"
               class="btn btn-light">Agregar</button>
           </div>
         </div>
