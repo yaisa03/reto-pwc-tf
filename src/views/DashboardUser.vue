@@ -40,14 +40,6 @@ const reqId = ref('')
 }
 
 onMounted(getProjects);
-
-// seleccionar id de proyecto
-let currentProject = ref('')
-const selectId = async() => {
-    console.log(currentProject.value)
-  window.localStorage.setItem('ID', currentProject.value)
-  console.log(window.localStorage.getItem('ID'))
-}
 // let idtocompRequirement = ref('')
 
 // function getIDProject(id){
@@ -77,16 +69,16 @@ const selectId = async() => {
             <table class="table table-responsive align-middle table-hover">
                 <thead class="align-middle">
                     <tr class="bg-light text-center">
-                        <th scope="col" width="15%">Requerimiento</th>
                         <th scope="col" width="10%">Tema</th>
-                        <th scope="col" width="10%">Pilar</th>
+                        <th scope="col" width="15%">Requerimiento</th>
                         <th scope="col" width="10%">Fecha de creación</th>
                         <th scope="col" width="10%">Fecha de vencimiento</th>
+                        <th scope="col" width="10%">Fecha de aceptación</th>
                         <th scope="col" width="15%">Responsable de requerimiento</th>
                         <th scope="col" width="15%">Estatus</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-center" >
                     <tr v-for="r in requirements">
                         <td @click="compleateReq(r.id)">{{ r.data.theme }}</td>
                         <td style="cursor: pointer;"><router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}</router-link></td>

@@ -20,7 +20,7 @@ const handleSubmit = (e) =>{
     .then((res) => {
         console.log(res)
         e.target.reset()
-        updateReq(window.localStorage.getItem('reqID'), {...myReq, status: "Completado", newDate: new Date().toLocaleString()})
+        updateReq(window.localStorage.getItem('reqID'), {status: "Completado", newDate: new Date().toLocaleString()})
     })
 }
 

@@ -198,6 +198,11 @@ const createReq = async (e) => {
   })
 }
 
+const projectRequirements = (e) => {
+  e.preventDefault()
+  router.push('/pmo/projectRequirements')
+}
+
 onMounted(getData);
 </script>
 
