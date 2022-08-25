@@ -94,7 +94,7 @@ const selectId = async() => {
                         <td style="cursor: pointer;"><router-link class="navbar-brand" to="/user/completeRequirement">{{ r.data.requirement }}</router-link></td>
                         <td>{{ r.data.date }}</td>
                         <td>{{ r.data.expirationDate }}</td>
-                        <td>{{ r.data.dateDelivered }}</td>
+                        <td>{{ r.data.newDate }}</td>
                         <td>{{ r.data.responsable }}</td>
                         <td v-if="r.data.status!==''"><span class="ms-1">
                                 {{ r.data.status }}</span></td>
