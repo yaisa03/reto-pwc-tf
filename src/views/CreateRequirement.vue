@@ -11,7 +11,7 @@
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Tema </label>
         <div class="col-sm-5">
-          <select class="form-select" aria-label="Default select example">
+          <select v-model="themes" @change="selectTheme" class="form-select" aria-label="Default select example">
             <option selected>Seleccionar</option>
             <option value="1">Energia</option>
             <option value="2">Agua</option>
@@ -22,7 +22,7 @@
       <div class="row g-1 align-items-center ">
         <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Requerimiento</label>
         <div class="col-sm-5 ">
-          <input type="text" class="form-control" id="inputext" placeholder="Escribir">
+          <input v-model="req" type="text" class="form-control" id="inputext" placeholder="Escribir">
           <div class='Referencer'>
             <p class='ref'>Referenciar</p>
             <button class='arrowRight'><img height='33' class="rounded-circle" src='../assets/flechaRicht.png'
@@ -34,44 +34,44 @@
       <div class="row g-1  align-items-center ">
         <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Descripcion de Requerimiento</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control" id="inputext" placeholder="Escribir">
+          <input v-model="reqDescription" type="text" class="form-control" id="inputext" placeholder="Escribir">
         </div>
       </div>
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold">Contenidos Temáticos</label>
         <div class="col-sm-5">
-          <select class="form-select" aria-label="Default select example">
+          <select v-model="content" @change="selectContent" class="form-select" aria-label="Default select example">
             <option selected>Seleccionar</option>
-            <option value="1">GR1 301</option>
-            <option value="2">GR2 302</option>
-            <option value="3">GR3 303</option>
+            <option value="GR1 301">GR1 301</option>
+            <option value="GR2 302">GR2 302</option>
+            <option value="GR2 303">GR3 303</option>
           </select>
         </div>
       </div>
       <div class="row g-1 align-items-center ">
         <label for="inputTheme" class="col-sm-2 col-form-label fw-bold"> Responsable </label>
         <div class="col-sm-5">
-          <select class="form-select" aria-label="Default select example">
+          <select v-model="responsable" @change="selectResponsable" class="form-select" aria-label="Default select example">
             <option selected>Seleccionar</option>
-            <option value="1">Maria Caceres</option>
-            <option value="2">Lorena Alva</option>
-            <option value="3">Alvaro olea</option>
+            <option value="Maria Caceres">Maria Caceres</option>
+            <option value="Lorena Alva">Lorena Alva</option>
+            <option value="Alvaro olea">Alvaro olea</option>
           </select>
         </div>
       </div>
       <div class="row g-1 align-items-center">
         <label for="pStart" class=" col-sm-2 col-form-label fw-bold">Fecha de vencimiento</label>
         <div class="col-sm-5">
-          <input type="date" id="pStart" placeholder="Seleccionar" class="form-control">
+          <input v-model="eDate" type="date" id="pStart" placeholder="Seleccionar" class="form-control">
         </div>
       </div>
       <div class="row g-1 align-items-center">
         <label for="formFileMultiple" class="col-sm-2 col-form-label fw-bold">Subir Template</label>
         <div class="col-sm-5">
-          <input class="form-control" type="file" id="formFileMultiple" multiple>
+          <input v-bind="formFile" class="form-control" type="file" id="formFileMultiple" multiple>
         </div>
       </div>
-      <button type="submit" class="Btn">Crear requerimiento</button>
+      <button type="submit" @click="createReq" class="Btn">Crear requerimiento</button>
     </form>
   </div>
 </template>
@@ -128,24 +128,66 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-/* /* import { getItemsById } from '../firebase.js' */
+import { doc, getDoc } from 'firebase/firestore'
+import { getItemsById, addReq, referencia } from '../firebase.js'
+const router = useRouter()
+const projectRequirements = (e) => {
+  e.preventDefault()
+  router.push('/pmo/projectRequirements')
+}
 
 const docId = window.localStorage.getItem('ID');
 
-/* const themes = async () => {
-  return await getItemsById(docId)
-    .then((res) => {
-      return console.log(res);
-    }).catch((err) => err);
+let themes = ref('')
+let req = ref('')
+let reqDescription = ref('')
+let content = ref('')
+let responsable = ref('')
+let eDate = ref('')
+let formFile = ref('')
+
+let project = ref([])
+let id = window.localStorage.getItem('ID')
+console.log(id)
+const docRef = referencia(id)
+let reqDoc = ref('')
+
+const getData = async () => {
+    console.log('holi')
+    console.log(docId)
+    // getDoc(docRef)
+    // .then((response) => console.log(response.data()))
+    try {
+        const myProject = await getDoc(docRef)
+        project.value = myProject.data()
+        reqDoc.value = project.value.requerimientos
+        console.log(reqDoc)
+        console.log(project.value)
+    } catch(err) {
+        console.log(err)
+        console.log(err.stack)
+        console.log(err.message)
+    }
 }
 
-const bababa = getItemsById(docId)
-const router = useRouter()*/
-
-const projectRequirements = () => {
-  router.push('/pmo/projectRequirements')
+const createReq = (e) => {
+  e.preventDefault()
+  const newReq = {
+    theme: themes.value,
+    requirement: req.value,
+    reqDescription: reqDescription.value,
+    themeContent: content.value,
+    responsable: responsable.value,
+    expirationDate: eDate.value,
+    formFile: formFile.value,
+    proyectID: docId
+  }
+  console.log(newReq);
+  console.log(reqDoc.value)
+  //agregar el requerimiento al archivo por su id
+ addReq(newReq).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
 }
-/*
-onMounted(console.log(bababa)); */
+
+onMounted(getData);
 </script>
 

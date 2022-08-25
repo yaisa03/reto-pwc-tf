@@ -19,7 +19,11 @@ const router = createRouter({
 				},
 				{
 					path: "editProject",
-					component: () => import("../views/EditProject.vue"),
+					component: () => import("../views/EditProject.vue")
+				},
+				{
+					path: 'createRequirements',
+					component: () => import('../views/CreateRequirement.vue')
 				},
 				{
 					path: "createProject",
@@ -44,6 +48,10 @@ const router = createRouter({
 				{
 					path: "createUser",
 					component: () => import("../views/CreateUsers.vue"),
+				},
+				{
+					path: 'projectRequirements',
+					component: () => import('../views/ProjectRequirements.vue'),
 				},
 			],
 		},

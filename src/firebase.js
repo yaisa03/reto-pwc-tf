@@ -11,6 +11,7 @@ import {
     onSnapshot,
     where,
     query,
+    getDoc
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -52,6 +53,16 @@ const addReq = (reqData) => {
 
 const getProjectById = (id) => {
 	getDoc(doc(db, 'project', id))
+    .then((item) => {
+        console.log
+        return {
+            id: item.id,
+            data: item.data()
+        }
+    }).catch((err) => { console.log(err.message) });
+};
+const getItemsById = (id) => {
+	getDoc(doc(db, 'projects', id))
 		.then((item) => {
             console.log
 			return {
@@ -82,4 +93,5 @@ const getProjects = () => {
 const deleteProject = (id) => {
     deleteDoc(doc(projectColRef, id));
 };
-export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getProjectById, referencia };
+
+export { addProject, addRequer, readReq, getProjects, projectColRef, deleteProject, addReq, getProjectById, getItemsById, referencia };
