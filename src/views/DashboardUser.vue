@@ -106,7 +106,7 @@ onMounted(getProjects);
                         </td>
                         <td v-else-if="r.data.status === 'Vencido'">
                             <i class="bi bi-circle-fill" style="font-size: 1.5rem; color: red;"></i>
-                            <span class="ms-1">{{ r.data.status }}</span>
+                            <span class="ms-1">{{ r.data.status }}</span>&nbsp&nbsp&nbsp&nbsp&nbsp
                         </td>
                         <td v-else>
                             <i class="bi bi-circle-fill" style="font-size: 1.5rem; color: gray;"></i>
