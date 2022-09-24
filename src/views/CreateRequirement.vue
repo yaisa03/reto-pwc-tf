@@ -30,7 +30,7 @@
 
       </div>
       <div class="row g-1  align-items-center ">
-        <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Descripcion de Requerimiento</label>
+        <label for="inputRequiment" class="col-sm-2 col-form-label fw-bold">Descripción de Requerimiento</label>
         <div class="col-sm-5">
           <input v-model="reqDescription" type="text" class="form-control" id="inputext" placeholder="Escribir">
         </div>

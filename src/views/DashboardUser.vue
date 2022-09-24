@@ -47,18 +47,8 @@ const compleateReq = (id) => {
 }
 
 onMounted(getProjects);
-// let idtocompRequirement = ref('')
-
-// function getIDProject(id){
-//     idtocompRequirement.value=id
-//     window.localStorage.setItem('IDtoCompReq', idtocompRequirement.value)
-//     console.log(window.localStorage.getItem('IDtoCompReq'))
-
-// }
-
-//   busque en la coleccion de requerimientos aquellos  que tengan ese id de proyecto
-
 </script>
+
 <template>
     <div class="row g-3 align-items-center mt-1 w-50 p-3">
         <div class="col-auto">
@@ -119,4 +109,3 @@ onMounted(getProjects);
 
 <style>
 </style>
-
